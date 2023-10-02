@@ -1,0 +1,4 @@
+Action: Login
+Input: Username = "username" , Password = "password"
+Action: Navigate to "Orders" page
+Action: Click on the in-progress order

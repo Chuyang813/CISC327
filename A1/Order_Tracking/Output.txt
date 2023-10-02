@@ -1,0 +1,2 @@
+Display: The in-progress order page
+Message: "Order status: Preparing/On its way/Delivered"

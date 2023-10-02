@@ -1,0 +1,11 @@
+Display: "Reviews" Page for the selected restaurant
+List:
+----------------------------------
+-"Reviewer" - "Rating" - "Review"
+----------------------------------
+-"Reviewer" - "Rating" - "Review"
+----------------------------------
+-"Reviewer" - "Rating" - "Review"
+----------------------------------
+-"Reviewer" - "Rating" - "Review"
+----------------------------------

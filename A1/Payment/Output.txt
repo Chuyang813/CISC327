@@ -1,0 +1,6 @@
+If Payment Successful:
+    Display: "Payment Confimation Page"
+    Message "Payment Successful! Order Placed!"
+Else:
+    Display: "Payment Failed Page"
+    Message "Payment Failed! Please Try Again!"

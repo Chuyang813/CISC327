@@ -1,0 +1,3 @@
+Action: Navigate to Main Page
+Action: Scroll to the restaurant
+Action: Click on the "Review" button for the restaurant
