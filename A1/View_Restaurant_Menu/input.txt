@@ -1,0 +1,4 @@
+Action: Navigate to Main Page
+Action: Click Restaurants Button
+Action: Scroll to the restaurant
+Action: CLick on the "Menu" Button
