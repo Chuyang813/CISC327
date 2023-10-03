@@ -1,0 +1,6 @@
+Display: Details of placed order 
+List:
+--------------------------
+Order 1 - XXX - 2022-01-01
+--------------------------
+Message: "Order is successfully placed!"
