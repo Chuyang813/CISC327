@@ -1,0 +1,2 @@
+Action: Navigate to Main Page
+Action: Click Restaurants Button
