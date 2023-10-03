@@ -1,0 +1,6 @@
+Action: Navigate to Main Page
+Action: Click Restaurants Button
+Action: Scroll to the restaurant
+Action: CLick on the "Menu" Button
+Action: Add desired food items to the shopping cart
+Action: Click on "Place Order" Button
