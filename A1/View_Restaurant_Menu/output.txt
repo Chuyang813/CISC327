@@ -1,0 +1,11 @@
+Display: "Menu" Page for the selected restaurant
+List:
+----------------------------------
+Food Item 1 - Price - Description
+----------------------------------
+Food Item 2 - Price - Description
+----------------------------------
+Food Item 3 - Price - Description
+----------------------------------
+Food Item 4 - Price - Description
+----------------------------------
