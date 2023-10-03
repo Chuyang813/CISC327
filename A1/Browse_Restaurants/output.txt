@@ -1,0 +1,12 @@
+Display: "Restaurants" Page
+List:
+--------------------------
+Restaurant 1 - Menu button - Review button
+--------------------------
+Restaurant 2 - Menu button - Review button
+--------------------------
+Restaurant 3 - Menu button - Review button
+--------------------------
+Restaurant 4 - Menu button - Review button
+--------------------------
+Restaurant 5 - Menu button - Review button
