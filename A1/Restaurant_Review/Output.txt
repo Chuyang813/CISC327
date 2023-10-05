@@ -1,5 +1,5 @@
 [
-    "statu": "Restaurant Found",
+    "status": "Restaurant Found",
     "output_data": [
         List:
         [
