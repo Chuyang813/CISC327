@@ -1,6 +1,16 @@
-If Payment Successful:
-    Display: "Payment Confimation Page"
-    Message "Payment Successful! Order Placed!"
-Else:
-    Display: "Payment Failed Page"
-    Message "Payment Failed! Please Try Again!"
+{
+    "test_case_name": "Payment: Senario 1",
+    output:{
+        "statu": "Valid",
+        "message": "Payment Successful"
+        "redirect": "/Place_Orders"
+    }
+
+    "test_case_name": "Payment: Senario 2",
+    output:{
+        "statu": "Invalid",
+        "message": "Payment Failed",
+        "redirect": "/Payment"
+    }
+    
+}

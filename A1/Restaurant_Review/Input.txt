@@ -1,3 +1,15 @@
-Action: Navigate to Main Page
-Action: Scroll to the restaurant
-Action: Click on the "Review" button for the restaurant
+[
+    {
+        "test_case_name": "Restaurant Review: Scenario 1",
+        "Input_data": {
+            "restaurant_name": "XXX",
+            
+            If user want to write review:
+                "Input_data": {
+                    "reviewMessage": "XXX",
+                    "rating": "XXX",
+                    "user_name": "XXX"
+                }
+        },
+    }
+]

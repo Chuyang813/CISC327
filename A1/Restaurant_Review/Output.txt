@@ -1,11 +1,20 @@
-Display: "Reviews" Page for the selected restaurant
-List:
-----------------------------------
--"Reviewer" - "Rating" - "Review"
-----------------------------------
--"Reviewer" - "Rating" - "Review"
-----------------------------------
--"Reviewer" - "Rating" - "Review"
-----------------------------------
--"Reviewer" - "Rating" - "Review"
-----------------------------------
+[
+    "statu": "Restaurant Found",
+    "output_data": [
+        List:
+        [
+            "review_content": "abc",
+            "review_rating": "4",
+            "review_date": "2111-11-11",
+            "review_time": "12:00:00",
+            "review_user": "someone"
+        ],
+        [
+            "review_content": "efg",
+            "review_rating": "3",
+            "review_date": "2111-12-22",
+            "review_time": "12:00:00",
+            "review_user": "somebody"
+        ],...
+    ]
+]

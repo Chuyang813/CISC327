@@ -1,11 +1,19 @@
-Action: Navigate to Cart
-Action: Navigate to Checkout
-IF: Exists saved payment method
-    Action: Select saved payment method
-ELSE:
-    Action: Select new payment method - "Credit Card"
-    Action: Enter payment details
-    Input: Card number = "1234 5678 9876 5432"
-    Input: Expiry date = "10/23"
-    Input: CVV = "123"
-Action: Click "Pay Now" button
+[
+    {
+        "test_case_name": "Payment: Scenario 1",
+        "Input_data": {
+            "payment_method": "Credit Card",
+            "card_number": "1234 5678 9876 5432",
+            "expiry_date": "10/23",
+            "cvv": "123"
+        }
+
+        "test_case_name": "Payment: Scenario 2",
+        "Input_data": {
+            "payment_method": "debit Card",
+            "card_number": "1234 5678 9876 5432",
+            "expiry_date": "10/23",
+            "cvv": "123"
+        }
+    }
+]

@@ -1,3 +1,8 @@
-Action: Login
-Input: Username = "username", Password = "password"
-Action: Navigate to "Orders" page
+[
+    {
+        "test_case_name": "Past Orders: Scenario1",
+        Input:{
+            "OrderNum": "value1"
+        }
+    }
+]

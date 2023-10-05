@@ -1,2 +1,8 @@
-Action: Login
-Input: Username = "username", Password = "wrongpassword"
+[
+    {
+        "test_case_name": "Past Orders: Scenario2",
+        Input:{
+            "OrderNum": "value3"
+        }
+    }
+]
