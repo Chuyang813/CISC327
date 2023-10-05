@@ -1,4 +1,9 @@
-Action: Navigate to Main Page
-Action: Click Restaurants Button
-Action: Scroll to the restaurant
-Action: CLick on the "Menu" Button
+{
+    [
+        "test_case_name": "View_Restaurant_Menu: Scenario 1",
+        "Input_data": {
+            "search_content": "KFC",  ## Restaurant
+        },
+
+    ]
+}
