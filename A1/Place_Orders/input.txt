@@ -1,6 +1,10 @@
-Action: Navigate to Main Page
-Action: Click Restaurants Button
-Action: Scroll to the restaurant
-Action: CLick on the "Menu" Button
-Action: Add desired food items to the shopping cart
-Action: Click on "Place Order" Button
+{
+    [
+        "test_case_name": "Place_Orders: Scenario 1",
+        "Input_data": {
+            "food_item1": "chicken",  
+            "food_item2": "fries",
+            "food_item3": "cheeseburger", 
+        }
+    ]
+}
