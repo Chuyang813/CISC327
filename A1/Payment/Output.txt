@@ -1,14 +1,14 @@
 {
     "test_case_name": "Payment: Senario 1",
     output:{
-        "statu": "Valid",
+        "status": "Valid",
         "message": "Payment Successful"
         "redirect": "/Place_Orders"
     }
 
     "test_case_name": "Payment: Senario 2",
     output:{
-        "statu": "Invalid",
+        "status": "Invalid",
         "message": "Payment Failed",
         "redirect": "/Payment"
     }
