@@ -1,11 +1,11 @@
 {
     [
-        "test_case_name": "Browse_Restaurant: Senario 1",
+        "test_case_name": "Browse_Restaurant: Scenario 1",
         "Input_data": {
             "search_content": "KFC",  ## Restaurant
         },
 
-        "test_case_name": "Browse_Restaurant: Senario 1",
+        "test_case_name": "Browse_Restaurant: Scenario 2",
         "Input_data": {
             "search_content": "chicken",  ## Food type
         }
