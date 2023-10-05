@@ -1,0 +1,2 @@
+Display: Registration error page
+Message: “Registration error. Password must be at least 8 characters long.”
