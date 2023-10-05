@@ -1,6 +1,11 @@
-Display: Details of placed order 
-List:
---------------------------
-Order 1 - XXX - 2022-01-01
---------------------------
-Message: "Order is successfully placed!"
+{
+    "status": "Order found",
+    "output_data": 
+        "Order is placed successfully!",
+        "user_id": 1,
+        "order_id": "1",
+        "order_date": "2017-12-12 00:00:00",
+        "order_total": "100",
+        "order_payment_method": "Credit Card",
+        "order_payment_date": "2017-12-12 00:00:00"
+}
