@@ -1,3 +1,9 @@
-Action: Navigate to Registration Page
-Input: Username = "a", Password = "a"
-Action: Click Register Button
+[
+    {
+        "test_case_name": "User_Registration: Scenario 2",
+        "Input_data": {
+            "username": "a",
+            "password": "a"
+        }
+    }
+]
