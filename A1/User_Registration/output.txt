@@ -1,2 +1,5 @@
-Display: Registration completion page
-Message: “Registration successful!”
+{
+    "status": "success",
+    "Message": "Registration successful! Proceeding to the login page."
+    "redirect": "/login"
+}
