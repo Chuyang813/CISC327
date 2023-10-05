@@ -1,0 +1,2 @@
+Display: Login error page
+Message: "Password incorrect. Please re-enter password."
