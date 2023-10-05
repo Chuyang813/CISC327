@@ -1,2 +1,13 @@
-Action: Navigate to Main Page
-Action: Click Restaurants Button
+{
+    [
+        "test_case_name": "Browse_Restaurant: Senario 1",
+        "Input_data": {
+            "search_content": "KFC",  ## Restaurant
+        },
+
+        "test_case_name": "Browse_Restaurant: Senario 1",
+        "Input_data": {
+            "search_content": "chicken",  ## Food type
+        }
+    ]
+}

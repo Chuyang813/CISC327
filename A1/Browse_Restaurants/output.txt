@@ -1,12 +1,24 @@
-Display: "Restaurants" Page
-List:
---------------------------
-Restaurant 1 - Menu button - Review button
---------------------------
-Restaurant 2 - Menu button - Review button
---------------------------
-Restaurant 3 - Menu button - Review button
---------------------------
-Restaurant 4 - Menu button - Review button
---------------------------
-Restaurant 5 - Menu button - Review button
+[
+    "statu': "Matched Restaurant",
+    "output_data": [
+        List:
+        [
+            "restaurant_name": "KFC",
+            "restaurant_location": "somewhere",
+        ]
+    ]
+
+    "statu": "Matched Food-Type",
+    "output_data": [
+        List:
+        [
+            "restaurant_name": "KFC",
+            "restaurant_location": "somewhere",
+        ],
+        [
+            "restaurant_name": "Popeyes",
+            "restaurant_location": "someplace",
+        ]
+        
+    ]
+]
