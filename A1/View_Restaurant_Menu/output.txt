@@ -5,7 +5,7 @@
         [
             "name": "pizza",
             "price": "40",
-            "description": "who doesn't know pizza"
+            "description": "best quality pizza in the area"
         ],
         [
             "name": "fries",
