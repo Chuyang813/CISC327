@@ -1,0 +1,3 @@
+Action: Navigate to Registration Page
+Input: Username = "a", Password = "a"
+Action: Click Register Button
