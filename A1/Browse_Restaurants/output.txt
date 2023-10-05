@@ -1,5 +1,5 @@
 [
-    "statu': "Matched Restaurant",
+    "status': "Matched Restaurant",
     "output_data": [
         List:
         [
@@ -8,7 +8,7 @@
         ]
     ]
 
-    "statu": "Matched Food-Type",
+    "status": "Matched Food-Type",
     "output_data": [
         List:
         [
