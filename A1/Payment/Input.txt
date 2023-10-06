@@ -3,6 +3,7 @@
         "test_case_name": "Payment: Scenario 1",
         "Input_data": {
             "payment_method": "Credit Card",
+            "method_existed": "False",
             "card_number": "1234 5678 9876 5432",
             "expiry_date": "10/23",
             "cvv": "123"
@@ -11,6 +12,16 @@
         "test_case_name": "Payment: Scenario 2",
         "Input_data": {
             "payment_method": "debit Card",
+            "method_existed": "False",
+            "card_number": "1234 5678 9876 5432",
+            "expiry_date": "10/23",
+            "cvv": "123"
+        }
+
+        "test_case_name": "Payment: Scenario 3",
+        "Input_data": {
+            "payment_method": "debit Card",
+            "method_existed": "True",
             "card_number": "1234 5678 9876 5432",
             "expiry_date": "10/23",
             "cvv": "123"

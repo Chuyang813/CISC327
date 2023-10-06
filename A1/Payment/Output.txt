@@ -9,8 +9,14 @@
     "test_case_name": "Payment: Senario 2",
     output:{
         "status": "Invalid",
-        "message": "Payment Failed",
+        "message": "Payment Failed, Worng Card Details",
         "redirect": "/Payment"
     }
     
+    "test_case_name": "Payment: Senario 3",
+    output:{
+        "status": "Valid",
+        "message": "Payment Successful"
+        "redirect": "/Place_Orders"
+    }
 }
