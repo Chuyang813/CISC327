@@ -1,4 +1,5 @@
 Pasta Place:
+Menu:
 - Spaghetti
 - Ravioli
 - Lasagna
@@ -7,7 +8,9 @@ Reviews:
 - [Bob, 2023-10-05]: Loved the pasta.
 - [Charlie, 2023-10-03]: Service could be better.
 
+----------------------------------------------------
 Burger Barn:
+Menu:
 - Beef Burger
 - Veggie Burger
 - Chicken Burger
@@ -16,7 +19,9 @@ Reviews:
 - [Bob, 2023-10-05]: A bit pricey.
 - [Charlie, 2023-10-03]: Friendly staff.
 
+----------------------------------------------------
 Veggie Villa:
+Menu:
 - Vegan Pizza
 - Tofu Salad
 - Mushroom Steak
