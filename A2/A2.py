@@ -80,3 +80,86 @@ class ReviewSystem:
     """
     
     """
+
+
+class UserLogin:
+   """
+      This Class has 2 functions:
+      1. register
+           -This function asks the user to register for an account with username and password.
+      2. login
+           -This function asks the user to login with valid credentials
+       This Class has 2 variables
+       1. username- username of the account
+       2. password - password of the account
+   """
+
+   username=""
+   password=""
+   def register(self):
+       #This function asks the user to register for an account with username and password.
+       print("Please create a username.")
+       username=input()
+       self.username=username
+
+       print("Please create a password for your account.")
+       password = input()
+       while (len(password)<8):
+           # error checking
+           print("Registration error. Password must be at least 8 characters long.")#error checking
+           password = input()
+       self.password=password
+       print("Registration successful! Proceeding to the login page.")
+
+
+   def login(self):
+       #This function asks the user to login with valid credentials
+       print("Please enter your username.")
+       username=input()
+       while (self.username!=username):
+           # error checking
+           print("Login error. Wrong username.")
+           username = input()
+       print("Please enter your password.")
+       password=input()
+       while (self.password!=password):
+           # error checking
+           print("Login error. Wrong username.")
+           password = input()
+       print("Login successful! Redirecting to the main page.")
+
+
+
+
+class OrderSystem:
+   """
+      This Class has 2 functions:
+      1. add_to_cart()
+           -This function asks the user to add a food item from the menu to the shopping cart.
+      2. place_order
+           -This function helps confirm and place the order
+       This Class has 1 variable:
+       1.items - stores the list of food items in the order
+   """
+   items=[]
+   def add_to_cart(self):
+       item=""
+       while(item!="k"):
+           print("Please enter the food item you would like to add to the shopping cart.(enter k to stop)")
+           item=input()
+           self.items.append(item)
+       self.items.remove("k")
+   def place_order(self):
+       print("Please confirm the following ordered food items:")
+       print(self.items)
+       answer=input("Is this the order you want? (Y/N)")
+       if answer=="Y":
+           print("Order is placed successfully!")
+           print("Order ID: 1")
+           print("Order date: 2017-12-12 00:00:00")
+           print("Order total: 100")
+           print("Order payment method: Credit Card")
+       #elif answer=="N":
+       else:
+           print("Redirecting to order page.")
+
