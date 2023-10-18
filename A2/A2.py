@@ -19,9 +19,9 @@ class Payment:
         """
         
         # Ask the user to select a payment method
-        print("Please select a payment method:")
-        print("1. Credit Card")
-        print("2. Debit Card")
+        print("Please select a payment method: \n" + 
+                "1. Credit Card \n" +
+                "2. Debit Card \n")
         # Get the user's input
         payment_method = input("Enter the number of the payment method: ")
         # Return the selected payment method
@@ -78,8 +78,77 @@ class Payment:
 
 class ReviewSystem:
     """
+    This Class has two functions:
+    1. write_review
+        - This function allows the user to write a review
+            to a particular restaurant
+    2. display_review
+        - This function allows the user to display the
+            reviews of a particular restaurant
     
     """
+    
+    def write_review(self, username, restaurant_name):
+        """
+        Args:
+            username (str): username for the review
+            restaurant_name (str): name of the restaurant
+        """
+        from datetime import datetime
+        
+        file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
+        
+        # Get the review from the user
+        content = str(input("Please enter your review: \n"))
+        if content == "":
+            print("Review cannot be empty\n")
+            content = str(input("Please re-enter your review: \n"))
+        
+        # Create review string
+        review_str = f"- [{username}, {datetime.today().date()}]: {content}\n"
+        
+        # Open the file and write the review content to the file
+        with open(file_path, "r+") as f:
+            lines = f.readlines()
+            
+            # Find the restaurant
+            if any(restaurant_name in line for line in lines):
+                line_num = next((i for i, line in enumerate(lines) if restaurant_name in line), None)
+                while "Reviews" not in lines[line_num]:
+                    line_num += 1
+                lines.insert(line_num + 1, review_str)
+                f.writelines(lines)
+            
+            
+    
+    def display_review(self, restaurant_name):
+        """
+        Args:
+            restaurant_name (str): name of the restaurant
+        """
+        
+        file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
+        
+        with open(file_path, "r") as f:
+            lines = f.readlines()
+            
+            # Find the restaurant
+            if any(restaurant_name in line for line in lines):
+                line_num = next((i for i, line in enumerate(lines) if restaurant_name in line), None)
+                while "Reviews" not in lines[line_num]:
+                    line_num += 1
+                
+                # Display all reviews with username and date
+                while line_num < len(lines) and lines[line_num] != "":
+                    print(lines[line_num].strip())
+                    line_num += 1
+                
+                
+        
+        
+
+            
+        
 
 
 class UserLogin:
