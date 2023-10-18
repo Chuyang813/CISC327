@@ -1,13 +1,13 @@
 class Payment:
     """
     This Class has three functions:
-    1. select_method 
+    1. select_method() 
         - This function ask the user to select a payment
             method and return the selected payment method
-    2. validate_info
+    2. validate_info()
         - This function ask the user to enter the payment
             information and validate the information
-    3. confirm_payment
+    3. confirm_payment()
         - This function ask the user to confirm the payment
             and return the confirmation
     """
