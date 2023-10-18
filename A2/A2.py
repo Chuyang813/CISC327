@@ -178,6 +178,17 @@ class UserLogin:
            print("Registration error. Password must be at least 8 characters long.")#error checking
            password = input()
        self.password=password
+       file_path="C:/CISC327/CISC327/A2/user_data.txt"
+       f=open(file_path,"a")
+       f.write("username: ")
+       f.write(self.username)
+       f.write("\n")
+       f.write("password: ")
+       f.write("")
+       f.write(self.password)
+       f.write("\n")
+       f.close()
+
        print("Registration successful! Proceeding to the login page.")
 
 
