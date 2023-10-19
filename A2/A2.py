@@ -222,7 +222,7 @@ class UserLogin:
        password=input()
        while (self.password!=password):
            # error checking
-           print("Login error. Wrong username.")
+           print("Login error. Wrong password.")
            password = input()
        print("Login successful! Redirecting to the main page.")
 
