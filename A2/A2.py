@@ -443,3 +443,35 @@ class Restaurant:
 
 # Load data into RestaurantBrowser
 RestaurantBrowser.load_data()
+def main():
+    #the main method will call the functions from all 6 classes to test the functionalities
+    userLogin=UserLogin()
+    userlogin.register()
+    userlogin.login()
+
+    browser=RestaurantBrowser()
+    browser.search_restaurant()
+
+    restaurant=Restaurant()
+    restaurant.view_menu()
+    restaurant.search_food()
+
+    abc=OrderSystem()
+    abc.add_to_cart()
+    abc.place_order()
+
+    pay=Payment()
+    pay.select_method()
+    pay.validate_info()
+    pay.confirm_payment()
+
+    review=ReviewSystem()
+    review.write_review(userlogin.username)
+    review.display_review(restaurant.name)
+
+    
+
+if __name__ == '__main__':
+    main()
+    
+
