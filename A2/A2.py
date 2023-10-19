@@ -252,11 +252,18 @@ class OrderSystem:
        print(self.items)
        answer=input("Is this the order you want? (Y/N)")
        if answer=="Y":
-           print("Order is placed successfully!")
-           print("Order ID: 1")
-           print("Order date: 2017-12-12 00:00:00")
-           print("Order total: 100")
-           print("Order payment method: Credit Card")
+           file_path="C:/CISC327/CISC327/A2/user_data.txt"
+           f=open(file_path,"a")
+           f.write("Order is placed successfully!")
+           f.write("\n")
+           f.write("Order ID: 1")
+           f.write("\n")
+           f.write("Order date: 2017-12-12 00:00:00")
+           f.write("\n")
+           f.write("Order total: 100")
+           f.write("\n")
+           f.write("Order payment method: Credit Card")
+           f.close()
        #elif answer=="N":
        else:
            print("Redirecting to order page.")
