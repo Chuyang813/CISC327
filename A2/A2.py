@@ -12,7 +12,7 @@ class Payment:
             and return the confirmation
     """
     
-    def select_method():
+    def select_method(self):
         """
         This function ask the user to select a payment
         method and return the selected payment method
@@ -24,61 +24,92 @@ class Payment:
                 "2. Debit Card \n")
         # Get the user's input
         payment_method = input("Enter the number of the payment method: ")
-        # Return the selected payment method
-        return payment_method
-    
-    def validate_info():
-        """
-        This function ask the user to enter the payment details and validate them 
-        """
-        while True:
-            # Ask the user to enter the payment details
-            card_num = input("Please enter your card number:\n")
-            if card_num < 0 or card_num > 9999999999999999:
-                print("Invalid card number")
-                break
-            
-            exp_date = input("Please enter your card expiration date (MM/YY):\n")
-            if exp_date[:2] < 1 or exp_date > 12:
-                print("Invalid expiration date")
-                break
-            
-            elif exp_date[2:] < 23:
-                print("Invalid expiration date")
-                break
-            
-            cvv_num = input("Please enter your card CVV number:\n")
-            if cvv_num < 0 or cvv_num > 999:
-                print("Invalid CVV number")
-                break
-            
-            
-            # If all infomation is correct, write the information to the file with
-            # the corresponding user
-            
-            ## CODE HERE ##
-            
-            # Return True if all the information is valid
-            return True
         
-        # Return False if any of the information is invalid
+        # Return the selected payment method
+        if payment_method == "1":
+            return "Credit Card"
+        else:
+            return "Debit Card"
+        
+        
+    
+    def validate_info(self, username, method):
+        while True:
+            try:
+                card_num = int(input("Please enter your card number (aaaabbbbccccdddd):\n"))
+                if card_num < 0 or card_num > 9999999999999999:
+                    raise ValueError("Invalid card number")
+                
+                exp_date = input("Please enter your card expiration date (MMYY):\n")
+                month, year = int(exp_date[:2]), int(exp_date[2:])
+                if month < 1 or month > 12:
+                    raise ValueError("Invalid expiration date")
+                elif year < 23:
+                    raise ValueError("Invalid expiration date")
+                
+                cvv_num = int(input("Please enter your card CVV number:\n"))
+                if cvv_num < 0 or cvv_num > 999:
+                    raise ValueError("Invalid CVV number")
+                
+                # If all information is correct, write the information to the file
+                with open("C:/CISC327/CISC327/A2/user_data.txt", "r+") as f:
+                    lines = f.readlines()
+                    if any(username in line for line in lines):
+                        line_num = next((i for i, line in enumerate(lines) 
+                                         if f"{username} - {method}" in line), None)
+                        if line_num is not None:
+                            while "Password:" not in lines[line_num]:
+                                line_num += 1
+                            line_num += 1  # move to the line after Password
+
+                            # Insert the payment info at the found position
+                            lines.insert(line_num, f"{method}:\n")
+                            lines.insert(line_num + 1, f"- Card Number: {card_num}\n")
+                            lines.insert(line_num + 2, f"- Expiration Date: {exp_date}\n")
+                            lines.insert(line_num + 3, f"- CVV: {cvv_num}\n")
+                        
+                            f.seek(0)
+                            f.writelines(lines)   
+                            f.truncate()
+                            
+                print(f"Saved payment info for {username}")
+                
+                return True
+            except ValueError as e:
+                print(e)
+                continue
+        
         return False
         
-    def confirm_payment():
-        """
-        This function ask the user to confirm the payment
-        and return the confirmation
-        """
-        
-        # Ask the user to confirm the payment
-        confirm = input("Confirm payment? (Y/N): ")
-        # Return the confirmation
-        return confirm    
+    def confirm_payment(self):
+        while True:
+            confirm = input("Confirm payment? (Y/N): ").lower()
+            if confirm == "y":
+                print("Payment confirmed\n")
+                return True
+            elif confirm == "n":
+                print("Payment cancelled\n")
+                return False
+            else:
+                print("Invalid input. Please enter Y or N.")
 
 payment = Payment()
+username = "bob456"
 method = payment.select_method()
 with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
     lines = f.readlines()
+    
+    if any(username in line for line in lines):
+        line_num = next((i for i, line in enumerate(lines) if f"{username} - {method}" in line), None)
+        if line_num is not None:
+            payment.confirm_payment()
+        else:
+            payment.validate_info(username, method)
+            payment.confirm_payment()
+            
+        
+        
+    
 
 
 
@@ -156,13 +187,13 @@ class ReviewSystem:
                 
                 
         
-reviews = ReviewSystem()
+"""reviews = ReviewSystem()
 reviews.write_review("John", "Pasta Place")  
 reviews.write_review("John", "Burger Barn") 
 reviews.write_review("John", "Veggie Villa") 
 reviews.display_review("Pasta Place")
 reviews.display_review("Burger Barn")
-reviews.display_review("Veggie Villa")
+reviews.display_review("Veggie Villa")"""
        
 
             
