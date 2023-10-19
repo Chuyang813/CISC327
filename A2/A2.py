@@ -445,6 +445,10 @@ class Restaurant:
 RestaurantBrowser.load_data()
 def main():
     #the main method will call the functions from all 6 classes to test the functionalities
+    #the program will call each of the classes in order, which simulates a user's experience of first using the program to order food from a restaurant. 
+    #the user will input information like login info, then restaurant and food items, and finally payment information
+    #the output will consist of messages showing either success or error in each step, and information such as order information and restaurant reviews 
+    
     userLogin=UserLogin()
     userlogin.register()
     userlogin.login()
