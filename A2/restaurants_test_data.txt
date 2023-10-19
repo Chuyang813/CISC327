@@ -4,6 +4,7 @@ Menu:
 - Ravioli
 - Lasagna
 Reviews:
+- [John, 2023-10-19]: new review for pasta place---------
 - [Alice, 2023-10-07]: Great ambiance!
 - [Bob, 2023-10-05]: Loved the pasta.
 - [Charlie, 2023-10-03]: Service could be better.
@@ -15,6 +16,7 @@ Menu:
 - Veggie Burger
 - Chicken Burger
 Reviews:
+- [John, 2023-10-19]: new review for burger barn---------
 - [Alice, 2023-10-07]: Tasty burgers!
 - [Bob, 2023-10-05]: A bit pricey.
 - [Charlie, 2023-10-03]: Friendly staff.
@@ -26,6 +28,7 @@ Menu:
 - Tofu Salad
 - Mushroom Steak
 Reviews:
+- [John, 2023-10-19]: new review for veggie villa--------
 - [Alice, 2023-10-07]: A treat for vegans.
 - [Bob, 2023-10-05]: Healthy options.
 - [Charlie, 2023-10-03]: Good variety.

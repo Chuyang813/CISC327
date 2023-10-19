@@ -1,0 +1,20 @@
+Username: alice123
+Password: Alice$2023
+Credit Card:
+- Card Number: 1234 5678 9012 3456
+- Expiration Date: 09/25
+- CVV: 123
+
+Username: bob456
+Password: BobPass$456
+Debit Card:
+- Card Number: 4321 8765 1098 7654
+- Expiration Date: 02/24
+- CVV: 456
+
+Username: charlie789
+Password: Charlie!789
+Credit Card:
+- Card Number: 9876 5432 1098 7654
+- Expiration Date: 12/23
+- CVV: 789

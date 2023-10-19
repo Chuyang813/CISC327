@@ -75,6 +75,14 @@ class Payment:
         # Return the confirmation
         return confirm    
 
+payment = Payment()
+method = payment.select_method()
+with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
+    lines = f.readlines()
+
+
+
+
 
 class ReviewSystem:
     """
@@ -117,8 +125,10 @@ class ReviewSystem:
                 while "Reviews" not in lines[line_num]:
                     line_num += 1
                 lines.insert(line_num + 1, review_str)
+                f.seek(0)
                 f.writelines(lines)
             
+      
             
     
     def display_review(self, restaurant_name):
@@ -137,15 +147,23 @@ class ReviewSystem:
                 line_num = next((i for i, line in enumerate(lines) if restaurant_name in line), None)
                 while "Reviews" not in lines[line_num]:
                     line_num += 1
-                
+                line_num += 1
                 # Display all reviews with username and date
-                while line_num < len(lines) and lines[line_num] != "":
+                print("\n" + restaurant_name + " Reviews: ")
+                while line_num < len(lines) and lines[line_num].startswith("-"):
                     print(lines[line_num].strip())
                     line_num += 1
                 
                 
         
-        
+reviews = ReviewSystem()
+reviews.write_review("John", "Pasta Place")  
+reviews.write_review("John", "Burger Barn") 
+reviews.write_review("John", "Veggie Villa") 
+reviews.display_review("Pasta Place")
+reviews.display_review("Burger Barn")
+reviews.display_review("Veggie Villa")
+       
 
             
         
@@ -345,7 +363,7 @@ class Restaurant:
 
 
 
-# Load data into RestaurantBrowser
+"""# Load data into RestaurantBrowser
 RestaurantBrowser.load_data()
 def main():
     #the main method will call the functions from all 6 classes to test the functionalities
@@ -354,8 +372,8 @@ def main():
     #the output will consist of messages showing either success or error in each step, and information such as order information and restaurant reviews 
     
     userLogin=UserLogin()
-    userlogin.register()
-    userlogin.login()
+    userLogin.register()
+    userLogin.login()
 
     browser=RestaurantBrowser()
     browser.search_restaurant()
@@ -374,12 +392,12 @@ def main():
     pay.confirm_payment()
 
     review=ReviewSystem()
-    review.write_review(userlogin.username)
-    review.display_review(restaurant.name)
+    review.write_review(userLogin.username)
+    review.display_review(restaurant.name)"""
 
     
 
-if __name__ == '__main__':
-    main()
+"""if __name__ == '__main__':
+    main()"""
     
 
