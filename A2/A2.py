@@ -32,7 +32,30 @@ class Payment:
             return "Debit Card"
         
         
-    
+    def has_payment_info(self, username, method):
+        with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
+            lines = f.readlines()
+        
+        # Find the username
+        user_line = next((i for i, line in enumerate(lines) if f"Username: {username}" in line), None)
+        
+        # If username is not found, return False
+        if user_line is None:
+            print("Username not found\n")
+            return False
+
+        # If username is found, search for the payment method under this username
+        for i in range(user_line, len(lines)):
+            if lines[i+2].strip() == method + ":":
+                print("Payment info found\n")
+                return True
+            elif "Username:" in lines[i]:
+                break
+
+        print("Payment info not found\n")
+        return False
+        
+        
     def validate_info(self, username, method):
         while True:
             try:
@@ -54,32 +77,30 @@ class Payment:
                 # If all information is correct, write the information to the file
                 with open("C:/CISC327/CISC327/A2/user_data.txt", "r+") as f:
                     lines = f.readlines()
-                    if any(username in line for line in lines):
-                        line_num = next((i for i, line in enumerate(lines) 
-                                         if f"{username} - {method}" in line), None)
-                        if line_num is not None:
-                            while "Password:" not in lines[line_num]:
-                                line_num += 1
-                            line_num += 1  # move to the line after Password
-
-                            # Insert the payment info at the found position
-                            lines.insert(line_num, f"{method}:\n")
-                            lines.insert(line_num + 1, f"- Card Number: {card_num}\n")
-                            lines.insert(line_num + 2, f"- Expiration Date: {exp_date}\n")
-                            lines.insert(line_num + 3, f"- CVV: {cvv_num}\n")
+                    line_num = next((i for i, line in enumerate(lines) if f"Username: {username}" in line), None)
+                    if line_num is not None:
+                        # Find the line after the Password
+                        while "Password:" not in lines[line_num]:
+                            line_num += 1
+                        line_num += 1
                         
-                            f.seek(0)
-                            f.writelines(lines)   
-                            f.truncate()
+                        # Insert the payment info at the found position
+                        lines.insert(line_num, f"{method}:\n")
+                        lines.insert(line_num + 1, f"- Card Number: {card_num}\n")
+                        lines.insert(line_num + 2, f"- Expiration Date: {exp_date}\n")
+                        lines.insert(line_num + 3, f"- CVV: {cvv_num}\n")
+                        
+                        f.seek(0)
+                        f.writelines(lines)
+                        f.truncate()
                             
-                print(f"Saved payment info for {username}")
+                print(f"Saved payment info for {username}\n")
                 
                 return True
             except ValueError as e:
                 print(e)
                 continue
         
-        return False
         
     def confirm_payment(self):
         while True:
@@ -93,20 +114,18 @@ class Payment:
             else:
                 print("Invalid input. Please enter Y or N.")
 
-payment = Payment()
+
+
+## Payment class test
+"""payment = Payment()
 username = "bob456"
 method = payment.select_method()
-with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
-    lines = f.readlines()
-    
-    if any(username in line for line in lines):
-        line_num = next((i for i, line in enumerate(lines) if f"{username} - {method}" in line), None)
-        if line_num is not None:
-            payment.confirm_payment()
-        else:
-            payment.validate_info(username, method)
-            payment.confirm_payment()
-            
+if payment.has_payment_info(username, method):
+    payment.confirm_payment()
+else:
+    payment.validate_info(username, method)
+    payment.confirm_payment()
+"""
         
         
     
@@ -186,7 +205,7 @@ class ReviewSystem:
                     line_num += 1
                 
                 
-        
+## ReviewSystem class test       
 """reviews = ReviewSystem()
 reviews.write_review("John", "Pasta Place")  
 reviews.write_review("John", "Burger Barn") 

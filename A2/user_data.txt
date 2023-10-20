@@ -7,6 +7,10 @@ Credit Card:
 
 Username: bob456
 Password: BobPass$456
+Credit Card:        ## new method saved
+- Card Number: 1111222233334444
+- Expiration Date: 1123
+- CVV: 111
 Debit Card:
 - Card Number: 4321876510987654
 - Expiration Date: 0224
