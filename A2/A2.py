@@ -246,7 +246,10 @@ class UserLogin:
            print("Registration error. Password must be at least 8 characters long.")#error checking
            password = input()
        self.password=password
-       file_path="C:/CISC327/CISC327/A2/user_data.txt"
+       
+       ### Access SQL database and add username and password to the database ###
+       
+       """file_path="C:/CISC327/CISC327/A2/user_data.txt"
        f=open(file_path,"a")
        f.write("username: ")
        f.write(self.username)
@@ -256,12 +259,15 @@ class UserLogin:
        f.write(self.password)
        f.write("\n")
        f.close()
-
+"""
        print("Registration successful! Proceeding to the login page.")
 
 
    def login(self):
        #This function asks the user to login with valid credentials
+       
+       ### Access SQL database and check if username and password are valid ###
+       
        print("Please enter your username.")
        username=input()
        while (self.username!=username):
@@ -297,8 +303,12 @@ class OrderSystem:
            item=input()
            self.items.append(item)
        self.items.remove("k")
+       
    def place_order(self):
-       print("Please confirm the following ordered food items:")
+       
+       ### Access SQL database and add order information to the database ###
+       
+       """print("Please confirm the following ordered food items:")
        print(self.items)
        answer=input("Is this the order you want? (Y/N)")
        if answer=="Y":
@@ -313,10 +323,10 @@ class OrderSystem:
            f.write("Order total: 100")
            f.write("\n")
            f.write("Order payment method: Credit Card")
-           f.close()
+           f.close()"""
        #elif answer=="N":
-       else:
-           print("Redirecting to order page.")
+       #else:
+       #    print("Redirecting to order page.")
 
 
 
@@ -333,6 +343,10 @@ class RestaurantBrowser:
 
     # Load restaurant data and create restaurant objects
     @classmethod
+    
+    
+    ### Access SQL database and load restaurant data ###
+    
     def load_data(cls, filename="restaurant_test_data.txt"):
        
         with open(filename, 'r') as file:
@@ -420,22 +434,33 @@ class Restaurant:
 
 
 
-"""# Load data into RestaurantBrowser
+# Load data into RestaurantBrowser
 RestaurantBrowser.load_data()
 def main():
     #the main method will call the functions from all 6 classes to test the functionalities
     #the program will call each of the classes in order, which simulates a user's experience of first using the program to order food from a restaurant. 
     #the user will input information like login info, then restaurant and food items, and finally payment information
     #the output will consist of messages showing either success or error in each step, and information such as order information and restaurant reviews 
-    
     userLogin=UserLogin()
-    userLogin.register()
-    userLogin.login()
+    print("Welcome to the Food Ordering System!")
+    selection = int(input("Enter the number of the option you would like to select: \n" +
+          "1. Register Account\n" + 
+          "2. Login\n" ))
+    if selection == 1:
+        userLogin.register()
+        userLogin.login()
+    else:
+        userLogin.login()
+    
+    
 
     browser=RestaurantBrowser()
-    browser.search_restaurant()
+    browser.list_all()
+    search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
+    browser.search_restaurant(search_word)
 
     restaurant=Restaurant()
+    input("Select food or search food: \n")
     restaurant.view_menu()
     restaurant.search_food()
 
@@ -450,11 +475,11 @@ def main():
 
     review=ReviewSystem()
     review.write_review(userLogin.username)
-    review.display_review(restaurant.name)"""
+    review.display_review(restaurant.name)
 
     
 
-"""if __name__ == '__main__':
-    main()"""
+if __name__ == '__main__':
+    main()
     
 
