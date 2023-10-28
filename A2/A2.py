@@ -33,7 +33,11 @@ class Payment:
         
         
     def has_payment_info(self, username, method):
-        with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
+        
+        ### Access SQL database and check if the user has payment info ###
+        
+        
+        """with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
             lines = f.readlines()
         
         # Find the username
@@ -51,7 +55,7 @@ class Payment:
                 return True
             elif "Username:" in lines[i]:
                 break
-
+"""
         print("Payment info not found\n")
         return False
         
@@ -74,7 +78,11 @@ class Payment:
                 if cvv_num < 0 or cvv_num > 999:
                     raise ValueError("Invalid CVV number")
                 
-                # If all information is correct, write the information to the file
+                
+                ### Access SQL database and write the payment info to the database ###
+                
+                
+                """# If all information is correct, write the information to the file
                 with open("C:/CISC327/CISC327/A2/user_data.txt", "r+") as f:
                     lines = f.readlines()
                     line_num = next((i for i, line in enumerate(lines) if f"Username: {username}" in line), None)
@@ -96,7 +104,7 @@ class Payment:
                             
                 print(f"Saved payment info for {username}\n")
                 
-                return True
+                return True"""
             except ValueError as e:
                 print(e)
                 continue
@@ -154,7 +162,10 @@ class ReviewSystem:
         """
         from datetime import datetime
         
-        file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
+        ### Access SQL database and write review to the database ###
+        
+        
+        """file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
         
         # Get the review from the user
         content = str(input("Please enter your review: \n"))
@@ -176,7 +187,7 @@ class ReviewSystem:
                     line_num += 1
                 lines.insert(line_num + 1, review_str)
                 f.seek(0)
-                f.writelines(lines)
+                f.writelines(lines)"""
             
       
             
@@ -187,7 +198,9 @@ class ReviewSystem:
             restaurant_name (str): name of the restaurant
         """
         
-        file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
+        ### Access SQL database and display reviews for the restaurant ###
+        
+        """file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
         
         with open(file_path, "r") as f:
             lines = f.readlines()
@@ -202,7 +215,7 @@ class ReviewSystem:
                 print("\n" + restaurant_name + " Reviews: ")
                 while line_num < len(lines) and lines[line_num].startswith("-"):
                     print(lines[line_num].strip())
-                    line_num += 1
+                    line_num += 1"""
                 
                 
 ## ReviewSystem class test       
