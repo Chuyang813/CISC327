@@ -387,8 +387,8 @@ class RestaurantBrowser:
         
         query = """
         SELECT DISTINCT r.* FROM restaurant r
-        LEFT JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
-        LEFT JOIN foodItem f ON rofi.foodItemName = f.name
+        INNER JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
+        INNER JOIN foodItem f ON rofi.foodItemName = f.name
         WHERE r.name LIKE %s OR f.name LIKE %s
         """
         
@@ -400,7 +400,11 @@ class RestaurantBrowser:
         
         if results:
             for restaurant in results:
-                print(restaurant)
+                print(f"Name: {restaurant['name']}")
+                print(f"Street: {restaurant['street']}")
+                print(f"City: {restaurant['city']}")
+                print(f"Postal Code: {restaurant['pc']}")
+                print(f"Website: {restaurant['url']}")
                 print("\n----------------------------------------------------\n")
         else:
             print("No matching results found.\n")
@@ -434,14 +438,8 @@ class Restaurant:
     """
 
     # Initialize restaurant object with menu and reviews from the data
-    def __init__(self, data):
-        
-        lines = data.split("\n")
-        self.name = lines[0].split(":")[0]
-        # Extract menu items
-        self.menu = [item.strip() for item in lines[2:lines.index("Reviews:")]]
-        # Extract reviews
-        self.reviews = lines[lines.index("Reviews:") + 1:]
+    def __init__(self, connection):
+        self.connection = connection
     
     # Display the restaurant's menu
     def view_menu(self):
@@ -496,7 +494,7 @@ def main():
     search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
     browser.search_restaurant(search_word)
 
-    #restaurant=Restaurant()
+    #restaurant=Restaurant(connection)
     #input("Select food or search food: \n")
     #restaurant.view_menu()
     #restaurant.search_food()
