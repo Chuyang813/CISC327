@@ -311,9 +311,9 @@ class UserLogin:
             cursor.execute("SELECT * FROM customer WHERE username = %s AND password = %s", (username, password))
             account = cursor.fetchone()
             if account:
-                print("Login successful! Redirecting to the main page.")
+                print("Login successful! Redirecting to the main page.\n")
             else:
-                print("Login error. Wrong username or password.")
+                print("Login error. Wrong username or password.\n")
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
         finally:
@@ -376,61 +376,58 @@ class RestaurantBrowser:
         2. list_all(): Lists all available or relevant restaurants.
     """
 
-    # List for storing all the restaurant objects
-    """restaurants = []
-
-    # Load restaurant data and create restaurant objects
-    @classmethod
-    
-    
-    ### Access SQL database and load restaurant data ###
-    
-    def load_data(cls, filename="restaurant_test_data.txt"):
-       
-        with open(filename, 'r') as file:
-            data = file.read().split("----------------------------------------------------")
-            
-            for restaurant_data in data:
-                # Check if data exists and then put it in restaurant list
-                if restaurant_data.strip():
-                    cls.restaurants.append(Restaurant(restaurant_data.strip()))
-
+    def __init__(self, connection):
+        self.connection = connection
+        
+        
     #Search restaurants either by name or by a type of food
-    @classmethod
-    def search_restaurant(cls, name="", food_type=""):
+    
+    def search_restaurant(self, name="", food_type=""):
+        cursor = self.connection.cursor(dictionary=True)
         
-        results = []
-        for restaurant in cls.restaurants:
-            # Search by restaurant name
-            if name and name in restaurant.name:
-                results.append(restaurant)
-            elif food_type:
-                # Search by food type in the restaurant's menu
-                for food in restaurant.menu:
-                    if food_type.lower() in food.lower():
-                        results.append(restaurant)
-                        break
+        query = """
+        SELECT DISTINCT r.* FROM restaurant r
+        LEFT JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
+        LEFT JOIN foodItem f ON rofi.foodItemName = f.name
+        WHERE r.name LIKE %s OR f.name LIKE %s
+        """
         
-        # Display search results
+        name_filter = "%" + name + "%"
+        food_type_filter = "%" + food_type + "%"
+        
+        cursor.execute(query, (name_filter, food_type_filter))
+        results = cursor.fetchall()
+        
         if results:
             for restaurant in results:
-                restaurant.display_info()
+                print(restaurant)
                 print("\n----------------------------------------------------\n")
         else:
             print("No matching results found.\n")
 
-    @classmethod
-    def list_all(cls):
+    
+    def list_all(self):
+        cursor = self.connection.cursor(dictionary=True)
+    
+        cursor.execute("SELECT * FROM restaurant")
+        restaurants = cursor.fetchall()
         
-        for restaurant in cls.restaurants:
-            restaurant.display_info()
-            print("\n----------------------------------------------------\n")"""
-
+        if not restaurants:
+            print("No restaurants found.\n")
+            return
+        
+        for restaurant in restaurants:
+            print(f"Name: {restaurant['name']}")
+            print(f"Street: {restaurant['street']}")
+            print(f"City: {restaurant['city']}")
+            print(f"Postal Code: {restaurant['pc']}")
+            print(f"Website: {restaurant['url']}")
+            print("\n----------------------------------------------------\n")
 
 class Restaurant:
 
-    """
-    This class will have 3 main functions:
+    
+    """This class will have 3 main functions:
         1. view_menu(): Displays the menu for the restaurant.
         2. search_food(): Search for a particular food in the menu.
         3. view_reviews(): Displays reviews for the restaurant
@@ -494,10 +491,10 @@ def main():
     
     
 
-    #browser=RestaurantBrowser()
-    #browser.list_all()
-    #search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
-    #browser.search_restaurant(search_word)
+    browser=RestaurantBrowser(connection)
+    browser.list_all()
+    search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
+    browser.search_restaurant(search_word)
 
     #restaurant=Restaurant()
     #input("Select food or search food: \n")
