@@ -1,3 +1,22 @@
+import mysql.connector
+
+def create_connection():
+    connection = mysql.connector.connect(
+            host="127.0.0.1",
+            user="root",
+            password="",
+            database="restaurant2db",
+            port=3306  
+        )
+    
+    if connection.is_connected():
+        print("Successful connect to database")
+        return connection
+    else:
+        print("Fail to connect to database")
+        return None
+
+
 class Payment:
     """
     This Class has three functions:
@@ -352,7 +371,7 @@ class RestaurantBrowser:
     """
 
     # List for storing all the restaurant objects
-    restaurants = []
+    """restaurants = []
 
     # Load restaurant data and create restaurant objects
     @classmethod
@@ -396,12 +415,10 @@ class RestaurantBrowser:
 
     @classmethod
     def list_all(cls):
-        """
-        Display information of all restaurants.
-        """
+        
         for restaurant in cls.restaurants:
             restaurant.display_info()
-            print("\n----------------------------------------------------\n")
+            print("\n----------------------------------------------------\n")"""
 
 
 class Restaurant:
@@ -448,12 +465,16 @@ class Restaurant:
 
 
 # Load data into RestaurantBrowser
-RestaurantBrowser.load_data()
+#RestaurantBrowser.load_data()
 def main():
     #the main method will call the functions from all 6 classes to test the functionalities
     #the program will call each of the classes in order, which simulates a user's experience of first using the program to order food from a restaurant. 
     #the user will input information like login info, then restaurant and food items, and finally payment information
     #the output will consist of messages showing either success or error in each step, and information such as order information and restaurant reviews 
+    
+    
+    
+    
     userLogin=UserLogin()
     print("Welcome to the Food Ordering System!")
     selection = int(input("Enter the number of the option you would like to select: \n" +
@@ -493,6 +514,8 @@ def main():
     
 
 if __name__ == '__main__':
-    main()
+    print(create_connection())
+    
+    #main()
     
 
