@@ -385,21 +385,44 @@ class RestaurantBrowser:
     def search_restaurant(self, name="", food_type=""):
         cursor = self.connection.cursor(dictionary=True)
         
-        query = """
-        SELECT DISTINCT r.* FROM restaurant r
-        INNER JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
-        INNER JOIN foodItem f ON rofi.foodItemName = f.name
-        WHERE r.name LIKE %s OR f.name LIKE %s
-        """
+        if name and food_type:
+            query = """
+            SELECT DISTINCT r.* FROM restaurant r
+            LEFT JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
+            LEFT JOIN foodItem f ON rofi.foodItemName = f.name
+            WHERE r.name LIKE %s OR f.name LIKE %s
+            """
+            name_filter = "%" + name + "%"
+            food_type_filter = "%" + food_type + "%"
+            cursor.execute(query, (name_filter, food_type_filter))
+            
+        # If only name is provided
+        elif name:
+            query = "SELECT * FROM restaurant WHERE name LIKE %s"
+            name_filter = "%" + name + "%"
+            cursor.execute(query, (name_filter,))
+            
+        # If only food_type is provided
+        elif food_type:
+            query = """
+            SELECT DISTINCT r.* FROM restaurant r
+            JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
+            JOIN foodItem f ON rofi.foodItemName = f.name
+            WHERE f.name LIKE %s
+            """
+            food_type_filter = "%" + food_type + "%"
+            cursor.execute(query, (food_type_filter,))
         
-        name_filter = "%" + name + "%"
-        food_type_filter = "%" + food_type + "%"
+        # If neither name nor food_type is provided, return nothing
+        else:
+            print("Please provide a restaurant name or food type to search.")
+            return
         
-        cursor.execute(query, (name_filter, food_type_filter))
         results = cursor.fetchall()
         
         if results:
             for restaurant in results:
+                print()
                 print(f"Name: {restaurant['name']}")
                 print(f"Street: {restaurant['street']}")
                 print(f"City: {restaurant['city']}")
