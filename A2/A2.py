@@ -461,30 +461,52 @@ class Restaurant:
     """
 
     # Initialize restaurant object with menu and reviews from the data
-    def __init__(self, connection):
+    def __init__(self, connection, name):
         self.connection = connection
+        self.name = name
     
     # Display the restaurant's menu
     def view_menu(self):
-        
-        print("\nMenu for", self.name)
-        for item in self.menu:
-            print("-", item)
+        cursor = self.connection.cursor(dictionary=True)
+        query = "SELECT * FROM foodItem WHERE name IN (SELECT foodItemName FROM restaurantOffersFoodItem WHERE restaurantName = %s)"
+        cursor.execute(query, (self.name,))
+        items = cursor.fetchall()
+
+        if items:
+            print(f"\nMenu for {self.name}:")
+            for item in items:
+                print("-", item['name'])
+        else:
+            print(f"No menu items found for {self.name}.")
 
     # Check if a food item exists in menu
     def search_food(self, food_name):
         
-        if food_name in self.menu:
+        cursor = self.connection.cursor(dictionary=True)
+        query = "SELECT * FROM foodItem WHERE name = %s AND name IN (SELECT foodItemName FROM restaurantOffersFoodItem WHERE restaurantName = %s)"
+        cursor.execute(query, (food_name, self.name))
+        item = cursor.fetchone()
+
+        if item:
             print(f"\n{food_name} is available at {self.name}\n")
         else:
             print(f"\n{food_name} is not available at {self.name}\n")
-
     # Display restaurant's reviews.
     def view_reviews(self):
        
-        print("\nReviews for", self.name)
-        for review in self.reviews:
-            print(review)
+        cursor = self.connection.cursor(dictionary=True)
+        query = "SELECT * FROM review WHERE restaurantName = %s"
+        cursor.execute(query, (self.name,))
+        reviews = cursor.fetchall()
+
+        if reviews:
+            print(f"\nReviews for {self.name}:")
+            for review in reviews:
+                print("Rating:", review['rating'])
+                print("Comment:", review['comment'])
+                print("----------------------------------------------------")
+        else:
+            print(f"No reviews found for {self.name}.")
 
 
 
@@ -517,10 +539,13 @@ def main():
     search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
     browser.search_restaurant(search_word)
 
-    #restaurant=Restaurant(connection)
-    #input("Select food or search food: \n")
-    #restaurant.view_menu()
-    #restaurant.search_food()
+    restaurant_name = input("Enter the name of the restaurant you would like to order from: \n")
+    restaurant=Restaurant(connection, restaurant_name)
+    restaurant.view_menu()
+    food_search = input("Search food or press 'B' to start adding food to cart: \n")
+    if food_search != "B":
+        restaurant.search_food(food_search)
+    #else:
 
     #abc=OrderSystem()
     #abc.add_to_cart()
