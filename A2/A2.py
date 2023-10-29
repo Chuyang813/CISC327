@@ -172,6 +172,8 @@ class ReviewSystem:
             reviews of a particular restaurant
     
     """
+    def __init__(self, connection):
+        self.connection = connection
     
     def write_review(self, username, restaurant_name):
         """
@@ -218,7 +220,26 @@ class ReviewSystem:
         """
         
         ### Access SQL database and display reviews for the restaurant ###
-        
+        try:
+            query = """
+            SELECT message FROM `review` join restauranthasreview join restaurant on restaurantName=restaurant.name and 
+            message=reviewMessage where restaurant.name=%s
+            """
+            cursor.execute(query, (restaurant_name))
+            review = cursor.fetchall()
+            if review:
+                print("Reviews for %s",(restaurant_name))
+                for reviews in review:
+                    print(reviews)
+            else:
+                print("No reviews found.")
+                return
+
+          
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
         """file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
         
         with open(file_path, "r") as f:
