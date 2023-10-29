@@ -250,69 +250,75 @@ reviews.display_review("Veggie Villa")"""
             
         
 
+    
 
 class UserLogin:
-   """
-      This Class has 2 functions:
-      1. register
-           -This function asks the user to register for an account with username and password.
-      2. login
-           -This function asks the user to login with valid credentials
-       This Class has 2 variables
-       1. username- username of the account
-       2. password - password of the account
-   """
+    """
+    This Class has 2 functions:
+    1. register
+        -This function asks the user to register for an account with username and password.
+    2. login
+        -This function asks the user to login with valid credentials
+    This Class has 2 variables
+    1. username- username of the account
+    2. password - password of the account
+    """
+    
+    
+    def __init__(self, connection):
+        self.connection = connection
+        
+        
+    def register(self):
+        cursor = self.connection.cursor()
+        
+        #This function asks the user to register for an account with username and password.
+        print("Please create a username.")
+        username=input().strip()
 
-   username=""
-   password=""
-   def register(self):
-       #This function asks the user to register for an account with username and password.
-       print("Please create a username.")
-       username=input()
-       self.username=username
+        try:
+            cursor.execute("SELECT username FROM customer WHERE username = %s", (username,))
+            existing_user = cursor.fetchone()
+            if existing_user:
+                print("Registration error. Username already exists. Please choose a different username.")
+                return
 
-       print("Please create a password for your account.")
-       password = input()
-       while (len(password)<8):
-           # error checking
-           print("Registration error. Password must be at least 8 characters long.")#error checking
-           password = input()
-       self.password=password
-       
-       ### Access SQL database and add username and password to the database ###
-       
-       """file_path="C:/CISC327/CISC327/A2/user_data.txt"
-       f=open(file_path,"a")
-       f.write("username: ")
-       f.write(self.username)
-       f.write("\n")
-       f.write("password: ")
-       f.write("")
-       f.write(self.password)
-       f.write("\n")
-       f.close()
-"""
-       print("Registration successful! Proceeding to the login page.")
+            print("Please create a password for your account.")
+            password = input().strip()
+            while len(password) < 8:
+                print("Registration error. Password must be at least 8 characters long.")
+                password = input().strip()
 
+            cursor.execute("INSERT INTO customer (username, password) VALUES (%s, %s)", (username, password))
+            self.connection.commit()
+            print("Registration successful! Proceeding to the login page.")
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
 
-   def login(self):
-       #This function asks the user to login with valid credentials
-       
-       ### Access SQL database and check if username and password are valid ###
-       
-       print("Please enter your username.")
-       username=input()
-       while (self.username!=username):
-           # error checking
-           print("Login error. Wrong username.")
-           username = input()
-       print("Please enter your password.")
-       password=input()
-       while (self.password!=password):
-           # error checking
-           print("Login error. Wrong password.")
-           password = input()
-       print("Login successful! Redirecting to the main page.")
+    def login(self):
+        cursor = self.connection.cursor()
+        
+        #This function asks the user to login with valid credentials
+        print("Please enter your username.")
+        username = input().strip()
+
+        print("Please enter your password.")
+        password = input().strip()
+
+        try:
+            cursor.execute("SELECT * FROM customer WHERE username = %s AND password = %s", (username, password))
+            account = cursor.fetchone()
+            if account:
+                print("Login successful! Redirecting to the main page.")
+            else:
+                print("Login error. Wrong username or password.")
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
+            
 
 
 
@@ -472,10 +478,10 @@ def main():
     #the user will input information like login info, then restaurant and food items, and finally payment information
     #the output will consist of messages showing either success or error in each step, and information such as order information and restaurant reviews 
     
+    connection = create_connection()
     
     
-    
-    userLogin=UserLogin()
+    userLogin=UserLogin(connection)
     print("Welcome to the Food Ordering System!")
     selection = int(input("Enter the number of the option you would like to select: \n" +
           "1. Register Account\n" + 
@@ -488,34 +494,34 @@ def main():
     
     
 
-    browser=RestaurantBrowser()
-    browser.list_all()
-    search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
-    browser.search_restaurant(search_word)
+    #browser=RestaurantBrowser()
+    #browser.list_all()
+    #search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
+    #browser.search_restaurant(search_word)
 
-    restaurant=Restaurant()
-    input("Select food or search food: \n")
-    restaurant.view_menu()
-    restaurant.search_food()
+    #restaurant=Restaurant()
+    #input("Select food or search food: \n")
+    #restaurant.view_menu()
+    #restaurant.search_food()
 
-    abc=OrderSystem()
-    abc.add_to_cart()
-    abc.place_order()
+    #abc=OrderSystem()
+    #abc.add_to_cart()
+    #abc.place_order()
 
-    pay=Payment()
-    pay.select_method()
-    pay.validate_info()
-    pay.confirm_payment()
+    #pay=Payment()
+    #pay.select_method()
+    #pay.validate_info()
+    #pay.confirm_payment()
 
-    review=ReviewSystem()
-    review.write_review(userLogin.username)
-    review.display_review(restaurant.name)
+    #review=ReviewSystem()
+    #review.write_review(userLogin.username)
+    #review.display_review(restaurant.name)
 
     
 
 if __name__ == '__main__':
-    print(create_connection())
     
-    #main()
+    
+    main()
     
 
