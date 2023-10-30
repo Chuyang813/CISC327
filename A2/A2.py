@@ -56,6 +56,7 @@ class Payment:
     def has_payment_info(self, username, method):
         
         ### Access SQL database and check if the user has payment info ###
+        cursor = self.connection.cursor()
         try:
             cursor.execute("SELECT creditCardNumber FROM customer WHERE username = %s", (username,))
             credit_info=cursor.fetchone()
@@ -118,6 +119,7 @@ class Payment:
                 continue
                 
         ### Access SQL database and write the payment info to the database ###
+        cursor = self.connection.cursor()
         try:
             if method=="Credit Card": 
                 cursor.execute("INSERT INTO customer (creditCardNumber, creditExpirationDate, creditCVV) VALUES (%d, %s, %d)", (card_num, exp_date, cvv_num))
@@ -223,6 +225,7 @@ class ReviewSystem:
         
         
         ### Access SQL database and write review to the database ###
+        cursor = self.connection.cursor()
          try:
             cursor.execute("INSERT INTO review (message, customerName, reviewDate) VALUES (%s, %s, %s)", (content, username, review_date))
             self.connection.commit()
@@ -264,7 +267,7 @@ class ReviewSystem:
         Args:
             restaurant_name (str): name of the restaurant
         """
-        
+        cursor = self.connection.cursor()
         ### Access SQL database and display reviews for the restaurant ###
         try:
             query = """
@@ -414,9 +417,22 @@ class OrderSystem:
            self.items.append(item)
        self.items.remove("k")
        
-   def place_order(self):
+   def place_order(self, username):
        
        ### Access SQL database and add order information to the database ###
+       cursor = self.connection.cursor()
+       from datetime import datetime
+       import random
+       order_id=random.randint(100000,999999)
+       price=random.randint(0,200)
+       tip=random.randint(0,20)
+       
+       now=datetime.now()
+       order_time=now.strftime("%H:%M:%S")
+       cursor.execute("INSERT INTO order1 (id,price,tip,placementTime, customerUserName) VALUES (%d, %d, %d, %s, %s)", (order_id,price,tip,order_time,username))
+       self.connection.commit()
+       print("Order is placed successfully!")
+
        
        """print("Please confirm the following ordered food items:")
        print(self.items)
