@@ -182,13 +182,29 @@ class ReviewSystem:
             restaurant_name (str): name of the restaurant
         """
         from datetime import datetime
+    
+        content = str(input("Please enter your review: \n"))
+        while(content == ""):
+            print("Review cannot be empty\n")
+            content = str(input("Please re-enter your review: \n"))
+        
+        now=datetime.now()
+        review_date=now.strftime("%Y-%m-%d")
+        
         
         ### Access SQL database and write review to the database ###
-        
+         try:
+            cursor.execute("INSERT INTO review (message, customerName, reviewDate) VALUES (%s, %s, %s)", (content, username, review_date))
+            self.connection.commit()
+            print("Review successfully added!")
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
         
         """file_path = "C:/CISC327/CISC327/A2/restaurants_test_data.txt"
         
-        # Get the review from the user
+        #Get the review from the user
         content = str(input("Please enter your review: \n"))
         if content == "":
             print("Review cannot be empty\n")
