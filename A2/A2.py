@@ -30,6 +30,8 @@ class Payment:
         - This function ask the user to confirm the payment
             and return the confirmation
     """
+    def __init__(self, connection):
+        self.connection = connection
     
     def select_method(self):
         """
@@ -54,7 +56,24 @@ class Payment:
     def has_payment_info(self, username, method):
         
         ### Access SQL database and check if the user has payment info ###
-        
+        try:
+            cursor.execute("SELECT creditCardNumber FROM customer WHERE username = %s", (username,))
+            credit_info=cursor.fetchone()
+            if credit_info and method=="Credit Card":
+                return True
+            else:
+                cursor.execute("SELECT debitCardNumber FROM customer WHERE username = %s", (username,))
+                debit_info=cursor.fetchone()
+                if debit_info:
+                    return True
+                else:
+                    print("Payment info not found\n")
+                    return False
+
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
         
         """with open("C:/CISC327/CISC327/A2/user_data.txt", "r") as f:
             lines = f.readlines()
@@ -75,8 +94,6 @@ class Payment:
             elif "Username:" in lines[i]:
                 break
 """
-        print("Payment info not found\n")
-        return False
         
         
     def validate_info(self, username, method):
@@ -96,10 +113,25 @@ class Payment:
                 cvv_num = int(input("Please enter your card CVV number:\n"))
                 if cvv_num < 0 or cvv_num > 999:
                     raise ValueError("Invalid CVV number")
+            except ValueError as e:
+                print(e)
+                continue
                 
-                
-                ### Access SQL database and write the payment info to the database ###
-                
+        ### Access SQL database and write the payment info to the database ###
+        try:
+            if method=="Credit Card": 
+                cursor.execute("INSERT INTO customer (creditCardNumber, creditExpirationDate, creditCVV) VALUES (%d, %s, %d)", (card_num, exp_date, cvv_num))
+                self.connection.commit()
+                print("Payment info successfully added!")
+            else:
+                cursor.execute("INSERT INTO customer (debitCardNumber, debitExpirationDate, debitCVV) VALUES (%d, %s, %d)", (card_num, exp_date, cvv_num))
+                self.connection.commit()
+                print("Payment info successfully added!")
+
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+        finally:
+            cursor.close()
                 
                 """# If all information is correct, write the information to the file
                 with open("C:/CISC327/CISC327/A2/user_data.txt", "r+") as f:
@@ -124,9 +156,7 @@ class Payment:
                 print(f"Saved payment info for {username}\n")
                 
                 return True"""
-            except ValueError as e:
-                print(e)
-                continue
+
         
         
     def confirm_payment(self):
@@ -370,7 +400,12 @@ class OrderSystem:
        This Class has 1 variable:
        1.items - stores the list of food items in the order
    """
-   items=[]
+        
+   def __init__(self, connection):
+        self.connection = connection
+        self.items=[]
+       
+  
    def add_to_cart(self):
        item=""
        while(item!="k"):
