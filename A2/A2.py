@@ -19,14 +19,18 @@ def create_connection():
 
 class Payment:
     """
-    This Class has three functions:
-    1. select_method() 
+    This Class has five functions:
+    1. init()
+        - This function establishes a connection with the database.
+    2. select_method() 
         - This function ask the user to select a payment
             method and return the selected payment method
-    2. validate_info()
+    3. validate_info()
         - This function ask the user to enter the payment
             information and validate the information
-    3. confirm_payment()
+    4. has_payment_info()
+        - This function checks if the database has the stored payment info for the customer.
+    5. confirm_payment()
         - This function ask the user to confirm the payment
             and return the confirmation
     """
@@ -206,11 +210,13 @@ else:
 
 class ReviewSystem:
     """
-    This Class has two functions:
-    1. write_review
+    This Class has three functions:
+    1. init()
+        - This function establishes a connection with the database.
+    2. write_review
         - This function allows the user to write a review
             to a particular restaurant
-    2. display_review
+    3. display_review
         - This function allows the user to display the
             reviews of a particular restaurant
     
@@ -334,10 +340,12 @@ reviews.display_review("Veggie Villa")"""
 
 class UserLogin:
     """
-    This Class has 2 functions:
-    1. register
+    This Class has three functions:
+    1. init()
+        - This function establishes a connection with the database.
+    2. register
         -This function asks the user to register for an account with username and password.
-    2. login
+    3. login
         -This function asks the user to login with valid credentials
     This Class has 2 variables
     1. username- username of the account
@@ -405,10 +413,12 @@ class UserLogin:
 
 class OrderSystem:
    """
-      This Class has 2 functions:
-      1. add_to_cart()
+      This Class has 3 functions:
+      1. init()
+        - This function establishes a connection with the database.
+      2. add_to_cart()
            -This function asks the user to add a food item from the menu to the shopping cart.
-      2. place_order
+      3. place_order
            -This function helps confirm and place the order
        This Class has 1 variable:
        1.items - stores the list of food items in the order
