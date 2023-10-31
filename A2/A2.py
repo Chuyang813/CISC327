@@ -173,6 +173,17 @@ class Payment:
             else:
                 print("Invalid input. Please enter Y or N.")
 
+    def initiate_payment(self, username):
+        method = self.select_method()
+        
+        if self.has_payment_info(username, method):
+            use_saved = input(f"Do you want to use saved {method} information? (Y/N): ").lower()
+            if use_saved == 'n':
+                self.validate_info(username, method)
+        else:
+            self.validate_info(username, method)
+        
+        return self.confirm_payment()
 
 
 ## Payment class test
@@ -317,7 +328,6 @@ reviews.display_review("Burger Barn")
 reviews.display_review("Veggie Villa")"""
        
 
-            
         
 
     
@@ -418,20 +428,27 @@ class OrderSystem:
        self.items.remove("k")
        
    def place_order(self, username):
-       
-       ### Access SQL database and add order information to the database ###
-       cursor = self.connection.cursor()
-       from datetime import datetime
-       import random
-       order_id=random.randint(100000,999999)
-       price=random.randint(0,200)
-       tip=random.randint(0,20)
-       
-       now=datetime.now()
-       order_time=now.strftime("%H:%M:%S")
-       cursor.execute("INSERT INTO order1 (id,price,tip,placementTime, customerUserName) VALUES (%d, %d, %d, %s, %s)", (order_id,price,tip,order_time,username))
-       self.connection.commit()
-       print("Order is placed successfully!")
+        ### Access SQL database and add order information to the database ###
+        cursor = self.connection.cursor()
+        from datetime import datetime
+        import random
+        order_id = random.randint(100000,999999)
+        price = random.randint(0,200)
+        tip = random.randint(0,20)
+
+        now = datetime.now()
+        order_time = now.strftime("%H:%M:%S")
+    
+        try:
+            cursor.execute("INSERT INTO order1 (id,price,tip,placementTime, customerUserName) VALUES (%s, %s, %s, %s, %s)", 
+                        (order_id, price, tip, order_time, username))
+            self.connection.commit()
+            print("Order is placed successfully!")
+        except Exception as e:
+            print(f"Error while placing order: {e}")
+        finally:
+            cursor.close()
+
 
        
        """print("Please confirm the following ordered food items:")
@@ -638,15 +655,32 @@ def main():
     #abc=OrderSystem()
     #abc.add_to_cart()
     #abc.place_order()
+    order_sys = OrderSystem(connection)
+    order_option = input("Would you like to place an order? (Y/N) ")
+    if order_option.upper() == 'Y':
+        order_sys.add_to_cart()
+        order_sys.place_order(userLogin.username)
 
     #pay=Payment()
     #pay.select_method()
     #pay.validate_info()
     #pay.confirm_payment()
+    pay = Payment(connection)
+    if pay.initiate_payment(username):
+        # This point will be reached only if the payment is confirmed
+        print("Payment processed successfully!")
+    else:
+        # This point will be reached if the payment is cancelled
+        print("Payment was not processed!")
 
     #review=ReviewSystem()
     #review.write_review(userLogin.username)
     #review.display_review(restaurant.name)
+    review = ReviewSystem(connection)
+    review_option = input("Would you like to leave a review? (Y/N) ")
+    if review_option.upper() == 'Y':
+        review.write_review(userLogin.username, restaurant_name)
+    review.display_review(restaurant_name)
 
     
 
