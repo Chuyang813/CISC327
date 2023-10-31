@@ -355,6 +355,8 @@ class UserLogin:
     
     def __init__(self, connection):
         self.connection = connection
+        self.username=""
+        self.password=""
         
         
     def register(self):
@@ -376,7 +378,9 @@ class UserLogin:
             while len(password) < 8:
                 print("Registration error. Password must be at least 8 characters long.")
                 password = input().strip()
-
+            
+            self.username=username
+            self.password=password
             cursor.execute("INSERT INTO customer (username, password) VALUES (%s, %s)", (username, password))
             self.connection.commit()
             print("Registration successful! Proceeding to the login page.")
@@ -676,7 +680,7 @@ def main():
     #pay.validate_info()
     #pay.confirm_payment()
     pay = Payment(connection)
-    if pay.initiate_payment(username):
+    if pay.initiate_payment(userLogin.username):
         # This point will be reached only if the payment is confirmed
         print("Payment processed successfully!")
     else:
