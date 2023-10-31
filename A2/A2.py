@@ -118,6 +118,7 @@ class Payment:
                 cvv_num = int(input("Please enter your card CVV number:\n"))
                 if cvv_num < 0 or cvv_num > 999:
                     raise ValueError("Invalid CVV number")
+                break
             except ValueError as e:
                 print(e)
                 continue
@@ -126,11 +127,11 @@ class Payment:
         cursor = self.connection.cursor()
         try:
             if method=="Credit Card": 
-                cursor.execute("INSERT INTO customer (creditCardNumber, creditExpirationDate, creditCVV) VALUES (%d, %s, %d)", (card_num, exp_date, cvv_num))
+                cursor.execute("UPDATE customer SET creditCardNumber=%s, creditExpirationDate=%s, creditCVV=%s WHERE username=%s", (card_num, exp_date, cvv_num, username))
                 self.connection.commit()
                 print("Payment info successfully added!")
             else:
-                cursor.execute("INSERT INTO customer (debitCardNumber, debitExpirationDate, debitCVV) VALUES (%d, %s, %d)", (card_num, exp_date, cvv_num))
+                cursor.execute("UPDATE customer SET debitCardNumber=%s, debitExpirationDate=%s, debitCVV=%s WHERE username=%s", (card_num, exp_date, cvv_num, username))
                 self.connection.commit()
                 print("Payment info successfully added!")
 
@@ -177,15 +178,16 @@ class Payment:
             else:
                 print("Invalid input. Please enter Y or N.")
 
-    def initiate_payment(self, username):
+    def initiate_payment(self, username1):
+        #username1 is used to avoid confusion
         method = self.select_method()
         
-        if self.has_payment_info(username, method):
+        if self.has_payment_info(username1, method):
             use_saved = input(f"Do you want to use saved {method} information? (Y/N): ").lower()
             if use_saved == 'n':
-                self.validate_info(username, method)
+                self.validate_info(username1, method)
         else:
-            self.validate_info(username, method)
+            self.validate_info(username1, method)
         
         return self.confirm_payment()
 
@@ -245,6 +247,7 @@ class ReviewSystem:
         cursor = self.connection.cursor()
          try:
             cursor.execute("INSERT INTO review (message, customerName, reviewDate) VALUES (%s, %s, %s)", (content, username, review_date))
+            cursor.execute("INSERT INTO restauranthasreview (restaurantName, reviewMessage) VALUES (%s, %s)", (restaurant_name, content))
             self.connection.commit()
             print("Review successfully added!")
         except mysql.connector.Error as err:
@@ -291,10 +294,10 @@ class ReviewSystem:
             SELECT message FROM `review` join restauranthasreview join restaurant on restaurantName=restaurant.name and 
             message=reviewMessage where restaurant.name=%s
             """
-            cursor.execute(query, (restaurant_name))
+            cursor.execute(query, (restaurant_name,))
             review = cursor.fetchall()
             if review:
-                print("Reviews for %s",(restaurant_name))
+                print("Reviews for ",restaurant_name)
                 for reviews in review:
                     print(reviews)
             else:
@@ -403,6 +406,8 @@ class UserLogin:
             cursor.execute("SELECT * FROM customer WHERE username = %s AND password = %s", (username, password))
             account = cursor.fetchone()
             if account:
+                self.username=username
+                self.password=password
                 print("Login successful! Redirecting to the main page.\n")
             else:
                 print("Login error. Wrong username or password.\n")
