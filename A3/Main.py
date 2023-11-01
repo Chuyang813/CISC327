@@ -40,11 +40,14 @@ def main():
     selection = int(input("Enter the number of the option you would like to select: \n" +
           "1. Register Account\n" + 
           "2. Login\n" ))
-    if selection == 1:
-        userLogin.register()
-        userLogin.login()
-    else:
-        userLogin.login()
+    while True:
+        if selection == 1:
+            userLogin.register()
+            if userLogin.login():
+                break
+        else:
+            if userLogin.login():
+                break
     
     
 

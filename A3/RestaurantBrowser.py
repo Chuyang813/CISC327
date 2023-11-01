@@ -65,6 +65,7 @@ class RestaurantBrowser:
             print("No restaurants found.\n")
             return
         
+        print("All Restaurants:\n")
         for restaurant in restaurants:
             print(f"Name: {restaurant['name']}")
             print(f"Street: {restaurant['street']}")
