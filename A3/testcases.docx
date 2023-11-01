@@ -93,7 +93,7 @@ output: Please select a payment method:
 
 ----------------------------------------------------------------------
 
-test case 2: payment
+test case 5: payment
 input:
 
 "payment_method": "Credit Card",
@@ -109,7 +109,7 @@ Payment processed successfully!
 
 ----------------------------------------------------------------------
 
-test case 4: add restaurant review
+test case 6: add restaurant review
 input:
 "write review or not (y/n): "y",
 "review_message": "good!"
