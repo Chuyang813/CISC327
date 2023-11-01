@@ -506,55 +506,44 @@ class RestaurantBrowser:
         
     #Search restaurants either by name or by a type of food
     
-    def search_restaurant(self, name="", food_type=""):
+    def search_restaurant(self, search_input=""):
         cursor = self.connection.cursor(dictionary=True)
-        
-        if name and food_type:
-            query = """
-            SELECT DISTINCT r.* FROM restaurant r
-            LEFT JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
-            LEFT JOIN foodItem f ON rofi.foodItemName = f.name
-            WHERE r.name LIKE %s OR f.name LIKE %s
-            """
-            name_filter = "%" + name + "%"
-            food_type_filter = "%" + food_type + "%"
-            cursor.execute(query, (name_filter, food_type_filter))
-            
-        # If only name is provided
-        elif name:
-            query = "SELECT * FROM restaurant WHERE name LIKE %s"
-            name_filter = "%" + name + "%"
-            cursor.execute(query, (name_filter,))
-            
-        # If only food_type is provided
-        elif food_type:
-            query = """
-            SELECT DISTINCT r.* FROM restaurant r
-            JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
-            JOIN foodItem f ON rofi.foodItemName = f.name
-            WHERE f.name LIKE %s
-            """
-            food_type_filter = "%" + food_type + "%"
-            cursor.execute(query, (food_type_filter,))
-        
-        # If neither name nor food_type is provided, return nothing
-        else:
-            print("Please provide a restaurant name or food type to search.")
+
+        if not search_input:
+            print("Please provide a search input.")
             return
-        
+
+        query = """
+        SELECT r.*, f.name as food_name 
+        FROM restaurant r
+        LEFT JOIN restaurantOffersFoodItem rofi ON r.name = rofi.restaurantName
+        LEFT JOIN foodItem f ON rofi.foodItemName = f.name
+        WHERE r.name LIKE %s OR f.name LIKE %s
+        """
+
+        search_filter = "%" + search_input + "%"
+        cursor.execute(query, (search_filter, search_filter))
+
         results = cursor.fetchall()
-        
+
         if results:
+            last_restaurant_name = ""
             for restaurant in results:
-                print()
-                print(f"Name: {restaurant['name']}")
-                print(f"Street: {restaurant['street']}")
-                print(f"City: {restaurant['city']}")
-                print(f"Postal Code: {restaurant['pc']}")
-                print(f"Website: {restaurant['url']}")
-                print("\n----------------------------------------------------\n")
+                if restaurant['name'] != last_restaurant_name:
+                    print(f"\nName: {restaurant['name']}")
+                    print(f"Street: {restaurant['street']}")
+                    print(f"City: {restaurant['city']}")
+                    print(f"Postal Code: {restaurant['pc']}")
+                    print(f"Website: {restaurant['url']}")
+                    print("\nRelated Food Items:")
+                    last_restaurant_name = restaurant['name']
+
+                if restaurant['food_name']:
+                    print(f"- {restaurant['food_name']}")
+            print("\n----------------------------------------------------\n")
         else:
             print("No matching results found.\n")
+
 
     
     def list_all(self):
@@ -603,6 +592,7 @@ class Restaurant:
                 print("-", item['name'])
         else:
             print(f"No menu items found for {self.name}.")
+            return False
 
     # Check if a food item exists in menu
     def search_food(self, food_name):
@@ -687,20 +677,23 @@ def main():
 
     restaurant_name = input("Enter the name of the restaurant you would like to order from: \n")
     restaurant=Restaurant(connection, restaurant_name)
-    restaurant.view_menu()
-    food_search = input("Search food or press 'B' to start adding food to cart: \n")
-    if food_search != "B":
+    while restaurant.view_menu() is False:
+        restaurant_name = input("Enter the name of the restaurant you would like to order from: \n")
+        restaurant=Restaurant(connection, restaurant_name)
+        restaurant.view_menu()
+    food_search = input("Search food or press 'B' to continue: \n")
+    if food_search.upper() == "B":
+        order_sys = OrderSystem(connection)
+        order_option = input("Would you like to place an order? (Y/N) ")
+        if order_option.upper() == 'Y':
+            order_sys.add_to_cart()
+            order_sys.place_order(userLogin.username)
+    else:
         restaurant.search_food(food_search)
-    #else:
-
     #abc=OrderSystem()
     #abc.add_to_cart()
     #abc.place_order()
-    order_sys = OrderSystem(connection)
-    order_option = input("Would you like to place an order? (Y/N) ")
-    if order_option.upper() == 'Y':
-        order_sys.add_to_cart()
-        order_sys.place_order(userLogin.username)
+    
 
     #pay=Payment()
     #pay.select_method()
