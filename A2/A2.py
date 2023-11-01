@@ -297,7 +297,7 @@ class ReviewSystem:
             cursor.execute(query, (restaurant_name,))
             review = cursor.fetchall()
             if review:
-                print("Reviews for ",restaurant_name)
+                print("Reviews for",restaurant_name)
                 for reviews in review:
                     print(reviews)
             else:
@@ -582,6 +582,7 @@ class Restaurant:
         1. view_menu(): Displays the menu for the restaurant.
         2. search_food(): Search for a particular food in the menu.
         3. view_reviews(): Displays reviews for the restaurant
+        4. add_customer(): Adds a new customer to the restaurant
     """
 
     # Initialize restaurant object with menu and reviews from the data
@@ -631,6 +632,27 @@ class Restaurant:
                 print("----------------------------------------------------")
         else:
             print(f"No reviews found for {self.name}.")
+    def add_customer(self, username1):
+        cursor=self.connection.cursor()
+        try:
+            #checks if the customer is already in the database
+            cursor.execute("SELECT * FROM restaurantservescustomer WHERE restaurantName= %s and username = %s", (self.name, username1))
+            result=cursor.fetchall()
+            if result:
+                unique=False
+            else:
+                unique=True
+            if unique:
+                cursor.execute("INSERT INTO restaurantservescustomer (restaurantName, username) VALUES (%s, %s)", (self.name, username1))
+            self.connection.commit()
+
+        except mysql.connector.Error as err:
+            print("Error: {}".format(err))
+
+        finally:
+            cursor.close()
+
+        
 
 
 
@@ -691,6 +713,9 @@ def main():
     else:
         # This point will be reached if the payment is cancelled
         print("Payment was not processed!")
+    #SQL statment to add customer
+    restaurant.add_customer(userLogin.username)
+
 
     #review=ReviewSystem()
     #review.write_review(userLogin.username)
