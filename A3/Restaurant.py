@@ -33,7 +33,6 @@ class Restaurant:
 
     # Check if a food item exists in menu
     def search_food(self, food_name):
-        
         cursor = self.connection.cursor(dictionary=True)
         query = "SELECT * FROM foodItem WHERE name = %s AND name IN (SELECT foodItemName FROM restaurantOffersFoodItem WHERE restaurantName = %s)"
         cursor.execute(query, (food_name, self.name))
@@ -41,8 +40,11 @@ class Restaurant:
 
         if item:
             print(f"\n{food_name} is available at {self.name}\n")
+            return True  
         else:
             print(f"\n{food_name} is not available at {self.name}\n")
+            return False  
+
     # Display restaurant's reviews.
     def view_reviews(self):
        

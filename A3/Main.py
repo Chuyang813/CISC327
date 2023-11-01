@@ -66,8 +66,18 @@ def main():
         restaurant_name = input("Enter the name of the restaurant you would like to order from: \n")
         restaurant=Restaurant(connection, restaurant_name)
         restaurant.view_menu()
-    food_search = input("Search food or press 'B' to continue: \n")
-    if food_search.upper() == "B":
+
+    restaurant_instance = Restaurant(connection, restaurant_name)
+    while True: 
+        food_choice = input("Search food or press 'B' to continue: \n")
+
+        if food_choice.upper() == "B":
+            break
+        else:
+            restaurant.search_food(food_choice)
+
+        restaurant_instance.search_food(food_choice)
+
         order_sys = OrderSystem(connection)
         order_option = input("Would you like to place an order? (Y/N) \n")
         if order_option.upper() == 'Y':
@@ -76,8 +86,7 @@ def main():
         else:
             print("Program ended.")
             return False
-    else:
-        restaurant.search_food(food_search)
+    
         
     pay = Payment(connection)
     if pay.initiate_payment(userLogin.username):
