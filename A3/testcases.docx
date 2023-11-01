@@ -4,7 +4,17 @@ output:
 
 test case 2: payment
 input:
+
+"payment_method": "Credit Card",
+"method_existed": "False",
+"card_number": "1234 5678 9876 5432",
+"expiry_date": "10/23",
+"cvv": "123"
+
 output:
+
+Payment confirmed
+Payment processed successfully!
 
 test case 3: place order
 input:
@@ -12,7 +22,15 @@ output:
 
 test case 4: add restaurant review
 input:
+"write review or not (y/n): "y",
+"review_message": "good!"
+
 output:
+Review successfully added!
+Reviews for  Pasta Place
+('bruh',)
+('good',)
+('Loved the pasta.',)
 
 test case 5: user registration
 input:
