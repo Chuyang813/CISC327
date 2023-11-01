@@ -71,9 +71,11 @@ class UserLogin:
             if account:
                 self.username=username
                 self.password=password
-                print("Login successful! Redirecting to the main page.\n")
+                print("\nLogin successful! Redirecting to the main page.\n")
+                return True
             else:
-                print("Login error. Wrong username or password.\n")
+                print("\nLogin error. Wrong username or password.\n")
+                return False
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
         finally:
