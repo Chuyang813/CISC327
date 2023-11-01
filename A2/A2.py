@@ -140,7 +140,7 @@ class Payment:
         finally:
             cursor.close()
                 
-                """# If all information is correct, write the information to the file
+            """# If all information is correct, write the information to the file
                 with open("C:/CISC327/CISC327/A2/user_data.txt", "r+") as f:
                     lines = f.readlines()
                     line_num = next((i for i, line in enumerate(lines) if f"Username: {username}" in line), None)
@@ -245,7 +245,7 @@ class ReviewSystem:
         
         ### Access SQL database and write review to the database ###
         cursor = self.connection.cursor()
-         try:
+        try:
             cursor.execute("INSERT INTO review (message, customerName, reviewDate) VALUES (%s, %s, %s)", (content, username, review_date))
             cursor.execute("INSERT INTO restauranthasreview (restaurantName, reviewMessage) VALUES (%s, %s)", (restaurant_name, content))
             self.connection.commit()
@@ -470,7 +470,7 @@ class OrderSystem:
 
 
        
-       """print("Please confirm the following ordered food items:")
+        """print("Please confirm the following ordered food items:")
        print(self.items)
        answer=input("Is this the order you want? (Y/N)")
        if answer=="Y":
