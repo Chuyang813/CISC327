@@ -1,6 +1,97 @@
-test case 1: browse restaurants
-input:
-output:
+test case 1-1: User login
+
+input-username-option1: alice123
+input-password-option1: Alice$2023
+
+input-username-option1: bob456
+input-password-option1: BobPass$456
+
+input-username-option1: charlie789
+input-password-option1: Charlie!789
+
+input-username-option1: johnwick55
+input-password-option1: john!!!
+
+output-success: Login successful! Redirecting to the main page.
+output-error: Login error. Wrong username or password.
+
+test case 1-2: User registration
+
+input: username & password
+output: Registration successful! Proceeding to the login page.
+
+----------------------------------------------------------------------
+
+test case 2: browse restaurants
+
+input-restaurant-option1: Burger Barn
+output: Name: Burger Barn
+        Street: 168 Division Street   
+        City: Kingston
+        Postal Code: K7L3M6
+        Website: www.burgerbarn.com.ca
+
+        Related Food Items:
+        - beef burger
+        - chicken burger
+        - veggie burger
+
+input-restaurant-option2: Pasta Place
+output: Name: Pasta Place
+        Street: 30 Princess Street
+        City: Kingston
+        Postal Code: K7L1A3
+        Website: www.pastaplace.com
+
+        Related Food Items:
+        - lasagna
+        - ravioli
+        - spaghetti
+
+input-restaurant-option3: Veggie Villa 
+output: Name: Veggie Villa
+        Street: 200 Division Street
+        City: Kingston
+        Postal Code: K7L3M6
+        Website: www.veggievilla.com
+
+        Related Food Items:
+        - mushroom steak
+        - tofu salad
+        - vegan pizza
+
+----------------------------------------------------------------------
+
+test case 3: View restaurant menu
+
+input-restaurant-option1: Burger Barn
+output: Menu for Burger Barn:
+        - beef burger
+        - chicken burger
+        - veggie burger 
+
+input-restaurant-option2: Pasta Place
+output: Menu for Pasta Place:
+        - lasagna
+        - ravioli
+        - spaghetti
+
+input-restaurant-option3: Veggie Villa
+output: Menu for Veggie Villa:
+        - mushroom steak
+        - tofu salad
+        - vegan pizza
+
+----------------------------------------------------------------------
+
+test case 4: Place order
+
+input-1 (Chosen Veggie Villa in previous step): Mushroom Steak
+output: Please select a payment method:
+        1. Credit Card
+        2. Debit Card
+
+----------------------------------------------------------------------
 
 test case 2: payment
 input:
@@ -16,9 +107,7 @@ output:
 Payment confirmed
 Payment processed successfully!
 
-test case 3: place order
-input:
-output:
+----------------------------------------------------------------------
 
 test case 4: add restaurant review
 input:
@@ -32,11 +121,7 @@ Reviews for  Pasta Place
 ('good',)
 ('Loved the pasta.',)
 
-test case 5: user registration
-input:
-output:
+----------------------------------------------------------------------
 
-test case 6: view restaurant menu
-input:
-output:
+
 

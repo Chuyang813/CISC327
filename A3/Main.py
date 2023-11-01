@@ -51,7 +51,11 @@ def main():
     browser=RestaurantBrowser(connection)
     browser.list_all()
     search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
-    browser.search_restaurant(search_word)
+    found = browser.search_restaurant(search_word)
+    while not found:
+        search_word = input("Enter the name of the restaurant or the type of food you would like to search: \n")
+        found = browser.search_restaurant(search_word)
+
 
     restaurant_name = input("Enter the name of the restaurant you would like to order from: \n")
     restaurant=Restaurant(connection, restaurant_name)

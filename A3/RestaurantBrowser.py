@@ -50,8 +50,10 @@ class RestaurantBrowser:
                 if restaurant['food_name']:
                     print(f"- {restaurant['food_name']}")
             print("\n----------------------------------------------------\n")
+            return True
         else:
-            print("No matching results found.\n")
+            print("No matching results found. Please try again.\n")
+            return False
 
 
     
