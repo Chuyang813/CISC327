@@ -59,3 +59,37 @@ def test_login_invalid_user(mock_print, mock_input, db_connection):
 def test_login_wrong_password(mock_print, mock_input, db_connection):
     user_login = UserLogin(db_connection)
     assert user_login.login() == False
+    
+    
+    
+"""
+Black box testing for UserLogin.py
+"""
+
+@patch('builtins.input', side_effect=['johnwick55', 'john!!!'])
+@patch('builtins.print')
+def test_login_successful(mock_print, mock_input, db_connection):
+    user_login = UserLogin(db_connection)
+    assert user_login.login() == True
+    
+    
+# wrong user name right password
+@patch('builtins.input', side_effect=['johnwick555', 'john!!!'])
+@patch('builtins.print')
+def test_login_invalid_user(mock_print, mock_input, db_connection):
+    user_login = UserLogin(db_connection)
+    assert user_login.login() == False
+
+# right user name wrong password
+@patch('builtins.input', side_effect=['johnwick55', 'password'])
+@patch('builtins.print')
+def test_login_invalid_user(mock_print, mock_input, db_connection):
+    user_login = UserLogin(db_connection)
+    assert user_login.login() == False
+    
+# wrong user name wrong password
+@patch('builtins.input', side_effect=['wrongname', 'wrongpassword'])
+@patch('builtins.print')
+def test_login_invalid_user(mock_print, mock_input, db_connection):
+    user_login = UserLogin(db_connection)
+    assert user_login.login() == False
