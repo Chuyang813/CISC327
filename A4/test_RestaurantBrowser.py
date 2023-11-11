@@ -18,10 +18,22 @@ def test_restaurant_data():
     rs=cursor.fetchall()
     assert len(rs)==3
 
-def test_search_restaurant():
+def test_search_restaurant1():
+    restaurant=RestaurantBrowser(create_connection())
+    #cursor=restaurant.connection.cursor()
+    result=restaurant.search_restaurant("Burger Barn")
+    assert result==True
+    
+def test_search_restaurant2():
     restaurant=RestaurantBrowser(create_connection())
     #cursor=restaurant.connection.cursor()
     result=restaurant.search_restaurant("Pasta Place")
+    assert result==True
+    
+def test_search_restaurant3():
+    restaurant=RestaurantBrowser(create_connection())
+    #cursor=restaurant.connection.cursor()
+    result=restaurant.search_restaurant("Veggie Villa")
     assert result==True
 
 def test_list_all(capsys):
