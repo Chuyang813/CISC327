@@ -37,16 +37,21 @@ def test_list_all(capsys):
     
 "Black box testing for RestaurantBrowser.py"
 
+
+# Case that can found the restaurant
 def test_search_restaurant():
     restaurant=RestaurantBrowser(create_connection())
     result=restaurant.search_restaurant("Burger Barn")
     assert result==True
     
+# Case that cannot found the restaurant
 def test_search_restaurant():
     restaurant=RestaurantBrowser(create_connection())
     result=restaurant.search_restaurant("KFC")
     assert result==False
     
+    
+# Case that cannot found the restaurant
 def test_serach_restaurant():
     restaurant=RestaurantBrowser(create_connection())
     result=restaurant.search_restaurant("pastapast")
