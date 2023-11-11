@@ -32,3 +32,22 @@ def test_list_all(capsys):
     last_line=all_output[-5]
 
     assert last_line=="Website: www.veggievilla.com"
+    
+    
+    
+"Black box testing for RestaurantBrowser.py"
+
+def test_search_restaurant():
+    restaurant=RestaurantBrowser(create_connection())
+    result=restaurant.search_restaurant("Burger Barn")
+    assert result==True
+    
+def test_search_restaurant():
+    restaurant=RestaurantBrowser(create_connection())
+    result=restaurant.search_restaurant("KFC")
+    assert result==False
+    
+def test_serach_restaurant():
+    restaurant=RestaurantBrowser(create_connection())
+    result=restaurant.search_restaurant("pastapast")
+    assert result==False
