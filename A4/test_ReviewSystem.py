@@ -16,7 +16,7 @@ def test_review_data():
     cursor=review.connection.cursor()
     cursor.execute("select * from review")
     rs=cursor.fetchall()
-    assert len(rs)==3
+    assert len(rs)==4
 
 def test_write_review(monkeypatch):
     review=ReviewSystem(create_connection())

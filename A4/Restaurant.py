@@ -34,31 +34,31 @@ class Restaurant:
     # Check if a food item exists in menu
     def search_food(self, food_name):
         cursor = self.connection.cursor(dictionary=True)
-        query = "SELECT * FROM foodItem WHERE name = %s AND name IN (SELECT foodItemName FROM restaurantOffersFoodItem WHERE restaurantName = %s)"
-        cursor.execute(query, (food_name, self.name))
-        item = cursor.fetchone()
+        query = "SELECT * FROM foodItem WHERE name LIKE %s AND name IN (SELECT foodItemName FROM restaurantOffersFoodItem WHERE restaurantName = %s)"
+        cursor.execute(query, ('%' + food_name + '%', self.name))
+        item = cursor.fetchall()
 
         if item:
-            print(f"\n{food_name} is available at {self.name}\n")
-            return True  
+            print(f"\nItems related to '{food_name}' available at {self.name}:")
+            for i in item:
+                print("-", i['name'])
         else:
-            print(f"\n{food_name} is not available at {self.name}\n")
-            return False  
+            print(f"\nNo items related to '{food_name}' found at {self.name}.\n")
+
 
     # Display restaurant's reviews.
     def view_reviews(self):
        
         cursor = self.connection.cursor(dictionary=True)
-        query = "SELECT * FROM review WHERE restaurantName = %s"
+        query = "SELECT * FROM restauranthasreview WHERE restaurantName = %s"
         cursor.execute(query, (self.name,))
         reviews = cursor.fetchall()
 
         if reviews:
             print(f"\nReviews for {self.name}:")
             for review in reviews:
-                print("Rating:", review['rating'])
-                print("Comment:", review['comment'])
-                print("----------------------------------------------------")
+                print("-", review['reviewMessage'])
+                
         else:
             print(f"No reviews found for {self.name}.")
     def add_customer(self, username1):
