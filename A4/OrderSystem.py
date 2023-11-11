@@ -2,7 +2,7 @@ import mysql.connector
 
 
 class OrderSystem:
-   """
+    """
       This Class has 3 functions:
       1. init()
         - This function establishes a connection with the database.
@@ -12,9 +12,9 @@ class OrderSystem:
            -This function helps confirm and place the order
        This Class has 1 variable:
        1.items - stores the list of food items in the order
-   """
+    """
         
-   def __init__(self, connection):
+    def __init__(self, connection):
         self.connection = connection
         self.items=[]
        
@@ -22,7 +22,7 @@ class OrderSystem:
        
        
   
-   def add_to_cart(self):
+    def add_to_cart(self):
        item=""
        while(item!="k"):
            print("Please enter the food item you would like to add to the shopping cart.(enter k to stop)")
@@ -33,7 +33,10 @@ class OrderSystem:
        
        
        
-   def place_order(self, username):
+    def place_order(self, username):
+       
+        if self.items==[]:
+            return False
         ### Access SQL database and add order information to the database ###
         cursor = self.connection.cursor()
         from datetime import datetime

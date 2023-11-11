@@ -32,11 +32,11 @@ def test_place_order_with_items(db_connection):
         order_system.add_to_cart()
         with patch('builtins.print') as mock_print:
             order_system.place_order('test_user')
-            # Add assertions to check database interactions or mock_print calls
+            assert mock_print.call_count == 1
 
 # Test for placing an order with no items
 def test_place_order_no_items(db_connection):
     order_system = OrderSystem(db_connection)
     with patch('builtins.print') as mock_print:
         order_system.place_order('test_user')
-        # Add assertions to verify the behavior with an empty cart
+        assert mock_print.call_count == False
