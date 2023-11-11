@@ -26,15 +26,18 @@ def db_connection():
 def test_register_new_user(mock_print, mock_input, db_connection):
     user_login = UserLogin(db_connection)
     user_login.register()
-    # Add code to verify if the user was added to the database
+    cursor = user_login.connection.cursor()
+    cursor.execute("SELECT * FROM customer WHERE username = 'test_user'")
+    result = cursor.fetchall()
+    assert len(result) == 1
+    
 
 # Test for registering with an existing username
 @patch('builtins.input', side_effect=['existing_user', 'Password123'])
 @patch('builtins.print')
 def test_register_existing_user(mock_print, mock_input, db_connection):
     user_login = UserLogin(db_connection)
-    user_login.register()
-    # Add code to verify the correct handling of existing user
+    assert user_login.register() == None   
 
 # Test for successful login
 @patch('builtins.input', side_effect=['johnwick55', 'john!!!'])
