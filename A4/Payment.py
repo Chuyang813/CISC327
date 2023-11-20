@@ -36,8 +36,11 @@ class Payment:
         # Return the selected payment method
         if payment_method == "1":
             return "Credit Card"
-        else:
+        elif payment_method == "2":
             return "Debit Card"
+        else:
+            print("Invalid input. Please enter 1 or 2.")
+            return self.select_method()
         
         
     def has_payment_info(self, username, method):
@@ -46,17 +49,19 @@ class Payment:
         cursor = self.connection.cursor()
         try:
             cursor.execute("SELECT creditCardNumber FROM customer WHERE username = %s", (username,))
-            credit_info=cursor.fetchone()
-            if credit_info and method=="Credit Card":
+            credit_info = cursor.fetchone()
+
+            cursor.execute("SELECT debitCardNumber FROM customer WHERE username = %s", (username,))
+            debit_info = cursor.fetchone()
+
+            if credit_info and credit_info[0] and method == "Credit Card":
+                return True
+            elif debit_info and debit_info[0] and method == "Debit Card":
                 return True
             else:
-                cursor.execute("SELECT debitCardNumber FROM customer WHERE username = %s", (username,))
-                debit_info=cursor.fetchone()
-                if debit_info:
-                    return True
-                else:
-                    print("Payment info not found\n")
-                    return False
+                print("Payment info not found\n")
+                return False
+
 
         except mysql.connector.Error as err:
             print("Error: {}".format(err))
