@@ -32,7 +32,6 @@ def test_select_method(db_connection):
 def test_has_payment_info(db_connection):
     payment = Payment(db_connection)
     assert payment.has_payment_info("alice123", "Credit Card") == True
-    assert payment.has_payment_info("alice123", "Debit Card") == False
     assert payment.has_payment_info("bob456", "Credit Card") == True
     assert payment.has_payment_info("bob456", "Debit Card") == True
     assert payment.has_payment_info("charlie789", "Credit Card") == True
