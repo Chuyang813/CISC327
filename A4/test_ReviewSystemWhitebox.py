@@ -53,6 +53,9 @@ def test_display_review(capsys):
 def test_display_review_case2(capsys):
     review=ReviewSystem(create_connection())
     cursor=review.connection.cursor()
+    cursor.execute("delete from restauranthasreview where restaurantName='Burger Barn' and reviewMessage='good!'")
+    cursor.execute("delete from review where message='good!'")
+    review.connection.commit()
     cursor.execute("delete from restauranthasreview where restaurantName='Pasta Place'")
     cursor.execute("delete from review where message='Loved the pasta.'")
     result=review.display_review("Pasta Place")
