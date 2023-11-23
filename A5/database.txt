@@ -1,0 +1,155 @@
+drop database if exists restaurant2DB;
+create database restaurant2DB;
+
+use restaurant2DB;
+
+create table restaurant(
+	name varchar(50) primary key,
+	street varchar(50),
+	city varchar(50),
+	pc char(6),
+	url varchar(50)
+	
+);
+
+create table customer(
+	username varchar(50) primary key,
+	password varchar(50),
+	firstName varchar(50),
+	lastName varchar(50),
+	creditCardNumber varchar(50),
+	creditExpirationDate varchar(4),
+	creditCVV varchar(3),
+	debitCardNumber varchar(50),
+	debitExpirationDate varchar(4),
+	debitCVV varchar(3)
+);
+
+create table order1(
+	id integer primary key,
+	price float,
+	tip float,
+	placementTime time,
+	deliveryTime time,
+	customerUserName varchar(50) not null,
+	foreign key (customerUsername) references customer(username) on delete cascade
+);
+
+create table foodItem(
+	name varchar(50) primary key,
+	price float
+);
+
+create table review(
+	message varchar(50) primary key,
+	customerName varchar(50) not null,
+	reviewDate date
+	
+);
+
+create table restaurantServesCustomer(
+	restaurantName varchar(50) not null,
+	username varchar(50) not null,
+	primary key (restaurantName, username),
+	foreign key (restaurantName) references restaurant(name) on delete cascade,
+	foreign key (username) references customer(username) on delete cascade
+);
+
+create table orderHasFoodItem(
+	orderID integer not null,
+	foodItemName varchar(50) not null,
+	primary key (orderID, foodItemName),
+	foreign key (orderID) references order1(id) on delete cascade,
+	foreign key (foodItemName) references foodItem(name) on delete cascade
+);
+
+create table restaurantOffersFoodItem(
+	restaurantName varchar(50) not null,
+	foodItemName varchar(50) not null,
+	primary key (restaurantName, foodItemName),
+	foreign key (restaurantName) references restaurant(name) on delete cascade,
+	foreign key (foodItemName) references foodItem(name) on delete cascade
+);
+
+create table restaurantHasReview(
+	restaurantName varchar(50) not null,
+	reviewMessage varchar(50) not null,
+	primary key (restaurantName, reviewMessage),
+	foreign key (restaurantName) references restaurant(name) on delete cascade,
+	foreign key (reviewMessage) references review(message) on delete cascade
+);
+
+
+insert into restaurant values
+('Pasta Place', '30 Princess Street', 'Kingston', 'K7L1A3', 'www.pastaplace.com' ),
+('Burger Barn', '168 Division Street', 'Kingston', 'K7L3M6', 'www.burgerbarn.com.ca' ),
+('Veggie Villa', '200 Division Street', 'Kingston', 'K7L3M6', 'www.veggievilla.com' )
+;
+
+insert into customer values
+('alice123','Alice$2023','Alice','Smith','1234567890123456','0925','123','','',''),
+('johnwick55','john!!!','John','Wick','1212121212121212','1023','007','','',''),
+('charlie789','Charlie!789','Charlie','Kennedy','9876543210987654','1223','789','','',''),
+('bob456','BobPass$456','Bob','Holden','1111222233334444','1123','111','4321876510987654','0224','456')
+;
+
+insert into order1 values
+(123123,100.00,10.00,'12:30:28','13:00:00','alice123'),
+(224568,30.50,3.50,'05:30:12','05:45:12','johnwick55'),
+(546588,12.00,1.20,'12:00:01','12:20:10','charlie789'),
+(125487,40.00,0.00,'9:00:01','9:59:50','bob456')
+;
+
+insert into foodItem values
+('spaghetti',4.25),
+('ravioli',6.00),
+('lasagna',12.00),
+('beef burger',20.00),
+('veggie burger',20.00),
+('chicken burger',10.50),
+('vegan pizza',11.00),
+('tofu salad',4.50),
+('mushroom steak',19.50)
+;
+
+insert into review values
+('Loved the pasta.','Bob','2023-10-05'),
+('Tasty burgers!','Alice','2023-10-07'),
+('Good variety.','Charlie','2023-10-03')
+;
+
+insert into restaurantServesCustomer values
+('Pasta Place','charlie789'),
+('Burger Barn','charlie789'),
+('Pasta Place','johnwick55'),
+('Pasta Place','alice123'),
+('Burger Barn','alice123'),
+('Veggie Villa','bob456')
+;
+
+insert into orderHasFoodItem values
+(123123,'spaghetti'),
+(123123,'ravioli'),
+(546588,'beef burger'),
+(224568,'tofu salad'),
+(125487,'vegan pizza')
+;
+
+insert into restaurantOffersFoodItem values
+('Pasta Place','spaghetti'),
+('Pasta Place','ravioli'),
+('Pasta Place','lasagna'),
+('Burger Barn','beef burger'),
+('Burger Barn','veggie burger'),
+('Burger Barn','chicken burger'),
+('Veggie Villa','vegan pizza'),
+('Veggie Villa','tofu salad'),
+('Veggie Villa','mushroom steak')
+;
+
+
+insert into restaurantHasReview values
+('Pasta Place','Loved the pasta.'),
+('Burger Barn','Tasty burgers!'),
+('Veggie Villa','Good variety.')
+;
