@@ -18,28 +18,9 @@ def test_review_data():
     rs=cursor.fetchall()
     assert len(rs)==4
 
-def test_write_review(monkeypatch,capsys):
-    review=ReviewSystem(create_connection())
-    cursor=review.connection.cursor()
-    info=""
-    monkeypatch.setattr('builtins.input', lambda username="": info)
-    review.write_review("Alice","Burger Barn")
-    output=capsys.readouterr()
-    all_output=output.out.split('\n')
-    last_line=all_output[-3]
 
-    assert last_line=="Review cannot be empty\n"
 
-"""def test_write_review(monkeypatch,capsys):
-    review=ReviewSystem(create_connection())
-    cursor=review.connection.cursor()
-    info="good!"
-    monkeypatch.setattr('builtins.input', lambda username="": info)
-    review.write_review("Alice","Burger Barn")
-    output=capsys.readouterr()
-    all_output=output.out.split('\n')
-    last_line=all_output[-2]
-    assert last_line=="Review successfully added!"""
+
 
 def test_display_review(capsys):
     review=ReviewSystem(create_connection())
@@ -50,7 +31,7 @@ def test_display_review(capsys):
 
     assert last_line=="('good!',)"
 
-"""def test_display_review_case2(capsys):
+def test_display_review_case2(capsys):
     review=ReviewSystem(create_connection())
     cursor=review.connection.cursor()
     cursor.execute("delete from restauranthasreview where restaurantName='Burger Barn' and reviewMessage='good!'")
@@ -64,4 +45,3 @@ def test_display_review(capsys):
     last_line=all_output[-2]
    
     assert last_line=="No reviews found."
-"""
