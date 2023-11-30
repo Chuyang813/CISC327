@@ -5,5 +5,4 @@ test_Payment_whitebox.py
 test_Restaurant.py
 test_RestaurantBrowser.py
 test_ReviewSystem.py
-test_ReviewSystemWhitebox.py
 test_UserLogin.py
